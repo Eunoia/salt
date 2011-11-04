@@ -46,15 +46,15 @@ legend{
 	      <input disabled=disabled id="search" type="text" value="Search...."></input><br>
     
            <label>
-            <input type="radio" disabled=disabled name="srchType" value="T" title="search only posting titles">
+            <input type="radio" disabled=disabled name="srchType">
               Destination
           </label> <br>
 		  <label>
-	 <input type="radio" disabled=disabled name="srchType" value="T" title="search only posting titles">
+	 <input type="radio" disabled=disabled name="srchType">
 				  Title Only
           </label> <br>
          <label>
-            <input disabled=disabled type="radio" name="srchType" value="A" checked="checked">
+            <input disabled=disabled type=radio name="srchType" checked="checked">
 					Entire Post
           </label> <br>
 
@@ -69,20 +69,20 @@ legend{
             <input type="radio" name="mode" value="A" id="offeredRadio">
             Offered
           </label><br>          <label>
-            <input type="radio" id="bothRadio" name="mode" value="A" >
+      		<input type="radio" checked="checked" id="bothRadio" name="mode">
            Both 
           </label> 
           </li><li>
           Leaving:<br>
           <label>
-            <input type="radio" name="chron" value="T" checked="checked">
+            <input type="radio" name="chron" disabled=disabled >
               Today
           </label> <br>
-			<label><input type="radio" name="chron" value="P">
+			<label><input type="radio" disabled=disabled name="chron">
 			Past
-</label><br>
+			</label><br>
           <label>
-            <input type="radio" name="chron" value="A" >
+            <input type="radio" disabled=disabled name="chron" >
             In the future
           </label> 
           </li>
@@ -222,7 +222,7 @@ document.getElementById("kitten").onload = function() {
     });
 
 	$.ajax({
-	    url: 'http://'+window.location.hostname+'/origp/'+cids.join(":"),
+	    url:'http://'+window.location.hostname+'/origp/'+cids.join(":"),
 	    dataType: "jsonp",
 	    jsonpCallback: "_orig_cb",
 	    cache: false,
@@ -285,6 +285,15 @@ document.getElementById("kitten").onload = function() {
 					}
 					if(place=="East Bay"){
 						place = "oakland"
+					}
+					if(place=="Slc"){
+						place = "Salt Lake City"
+					}
+					if(place=="Arizona"){
+						url = url.replace('11','9');
+					}
+					if(place=="Bay"){
+						place = "Bay Area"
 					}
 					if(place=="East"){
 						place = "East Point, GA"
