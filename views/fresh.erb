@@ -195,7 +195,7 @@ document.getElementById("kitten").onload = function() {
 			"<div class=post id=\""+cid+"\"><small><a href="+link+">"+cid+ "</a><br></small><b>"+title+"</b></div>";
 	}
 	$.ajax({
-        url: 'http://127.0.0.1/wop/'+cids.join(":"),
+        url: 'http://'+window.location.hostname+'/wop/'+cids.join(":"),
         dataType: "jsonp",
         jsonpCallback: "_wo_cb",
         cache: false,
@@ -222,7 +222,7 @@ document.getElementById("kitten").onload = function() {
     });
 
 	$.ajax({
-	    url: 'http://127.0.0.1/origp/'+cids.join(":"),
+	    url: 'http://'+window.location.hostname+'/origp/'+cids.join(":"),
 	    dataType: "jsonp",
 	    jsonpCallback: "_orig_cb",
 	    cache: false,
@@ -236,7 +236,7 @@ document.getElementById("kitten").onload = function() {
 	    }
 	});
 	$.ajax({
-        url: 'http://127.0.0.1/d/'+cids.join(":"),
+        url: 'http://'+window.location.hostname+'/d/'+cids.join(":"),
         dataType: "jsonp",
         jsonpCallback: "_dest_cb",
         cache: false,
