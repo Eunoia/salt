@@ -56,10 +56,10 @@ background-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png); ba
 body{ background-color: rgb(83,127,194); }
 //span.title{ color: rgb(83,127,194);  }
 #modeString{ 
-	background-image: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/1725/1725308.png?1313420060)
+//	background-image: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/1725/1725308.png?1313420060)
 	//background-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png); 
 	color: black;
-	background-color: rgb(83,127,194); 
+//	background-color: rgb(83,127,194); 
 	width:auto; padding-right:1ex; 
 	margin-left: -1ex;
 	padding-left: 1ex;
@@ -98,6 +98,7 @@ span.orig{
 	display:block; 
 	clear:none; font-size:140%;
 	text-align: center;
+	font-family: Raleway;
 }
 p{
 	margin-left: 10em;
