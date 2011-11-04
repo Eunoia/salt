@@ -31,13 +31,13 @@
 		next if post==nil
 	#	next if(post.posted<Time.now.to_i-(60*60*24*7*2))
 		if(last!=post.city)
-%>			<h1><%= post.city.upcase %></h1>
+%>			<h1 style="font-family: Airplane;font-size: 200%;text-transform:lowercase"><%= post.city.upcase %></h1>
 <%		end
 #		puts "<h1>"+post.city.upcase+"</h1>" if last!=post.city
 		last = post.city unless last==post.city
 %>
 		<p class="">
-			<span class="orig">&gt;<%= result.orig %>&lt;</span>
+			<span class="orig">&gt;&nbsp;<%= result.orig %>&nbsp;&lt;</span>
 			<a href="<%= post.link %>"><%= post.title %></a>
 		</p>
 	<% end %>

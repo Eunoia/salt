@@ -3,6 +3,19 @@
   <meta charset="utf8">
   <title><%= @title  %></title>
 <style>
+@font-face {
+  font-family: "Governor";
+  src: url("/Governor.otf") format("opentype");
+  }
+@font-face { 
+	font-family: "Airplane";
+	src: url("/Airplane.ttf")  format("truetype");
+	}
+@font-face {
+	font-family: "Raleway";
+	src:url('/raleway_thin.ttf') format("truetype");
+}	
+
 body{ margin:0 }
 #topbar li{ 
 //	font-size: 50%;
@@ -24,6 +37,7 @@ body{ margin:0 }
 	display: inline;
 }
 span#who{
+	font-family: Governor;
 	color: white;
 	font-size: 200%;
 }
@@ -49,7 +63,7 @@ span#who{
 </head>
 <body>
 	<div id="topBar">
-		<span id="who">Salt</span>
+		<span id="who">SALT</span>
 		<ul>
 			<li id="about">about</li>
 			<li id="cities">cities</li>
