@@ -1,0 +1,138 @@
+span.title{
+	margin-top: 2em;
+	margin-left: 80px;
+	font-size:1700%;
+	font-weight: bold;
+	font-family: helvetica; 
+	color: white; 
+	padding:0ex;
+}
+span#modeString{
+	position:absolute;
+	top:2.3em;
+	left:10px;
+//	color: white;
+	font-size: 130%;
+//	border:1px solid black;
+	font-family: Verdana ;
+}
+#postNew{
+font-size:140%;
+
+top: 10px;
+right: 60px;
+color:white;
+}
+body{ margin:0; }
+img{ 
+	margin-top:2em;
+//	border-radius:55px;
+	z-index:-1;
+//	border-radius-left-top:15px;
+	position:absolute; top: 0; left:0;}
+img.sf{
+}
+#modeString{
+/*	background: rgba(225,225,225,.8);
+	text-shadow
+color: white;
+}*/	/*
+	margin-left:1ex;
+	height: 3ex;
+	width: 7em;
+	color: rgba(122,122,122,.8);
+	border-radius: 10px;
+	background:rgba(119,157,215,.8);//rgba(238,238,238,.8);
+	text-shadow: 0px 2px 3px #666;
+}*/
+font-size: 150%;
+color: white;
+border-radius:15px;
+border-bottom-left-radius: 0px;
+border-top-left-radius: 0px;
+background-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png); background-attachment: }
+}
+
+body{ background-color: rgb(83,127,194); }
+//span.title{ color: rgb(83,127,194);  }
+#modeString{ 
+	background-image: url(http://colourlovers.com.s3.amazonaws.com/images/patterns/1725/1725308.png?1313420060)
+	//background-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png); 
+	color: black;
+	background-color: rgb(83,127,194); 
+	width:auto; padding-right:1ex; 
+	margin-left: -1ex;
+	padding-left: 1ex;
+	
+	 }
+span.earch{
+color:white;
+}
+p{ border-color: white; }
+body{
+background-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png); 
+background-attachment: fixed;}
+
+.title{
+//-webkit-mask-box-image: url(http://subtlepatterns.com/patterns/diagonal-noise.png);
+
+background: fixed url(http://subtlepatterns.com/patterns/diagonal-noise.png) repeat;
+
+text-fill-color: transparent;
+background-clip: text;
+
+-webkit-text-fill-color: transparent;
+-webkit-background-clip: text;
+
+//text-shadow: 0px 0px 30px rgba(30, 28, 28, 0.6);
+}
+
+
+img { width: auto; }
+
+h1{ font-family: Trebuchet; margin-left:.4em;  }
+span.orig{ 
+	font-family: helvetica;
+	width:10em;
+//	border:1px solid black; 
+	display:block; 
+	clear:none; font-size:140%;
+	text-align: center;
+}
+p{
+	margin-left: 10em;
+	border-radius: 10ex;
+		padding:0;
+	padding-top: 1ex;
+
+	padding-left: 3em;
+	width: 70%;
+	display: block;
+	border:1px solid black;
+}
+
+p{
+	background-color: rgba(241,241,241,.2);
+}
+a{ 
+//	border:1px solid black;
+	margin-top:0px;
+}
+h1{ 
+	font-family: courier;
+	}
+p{
+	margin-left:0px;
+	border-width: 0px;
+	margin-bottom:0;
+	margin-top:0;
+	border-radius: 1px; 
+	margin: 0 auto;
+	width:90%;
+	border-top: 1px dotted gray;
+	border-left: 1px dotted gray;
+	
+	padding-bottom:20px;
+	padding-top:20px;
+}
+

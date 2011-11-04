@@ -1,0 +1,49 @@
+<link href="/bannerStyles.css" rel="stylesheet">
+<span id="modeString"><%= @modeString %></span>
+
+<span class="title"><%= @banner %></span>
+<img class="la" src="/<%= @banner %>.png" />
+<%
+
+	last = ""
+	cond = @places.map{ |place| " dest=\"#{place}\" or "}.join
+	cond = cond[0..-4]
+	results = if(@mode==nil)
+		Results.find(:all, @mode, :conditions => cond )
+	else
+		Results.find_all_by_wo(@mode, :conditions => cond )
+	end
+	results = results
+	posts = results.collect{ |r| Posts.find_by_cid r.cid }
+	results.sort_by{ |r| 
+	post = posts.find do |p| 
+		if(p==nil)
+			p = Posts.new
+         	p.city = "0"
+		    p.posted = "0"
+		else
+			p.cid==r.cid
+		end
+	end
+	post.city+" "+r.orig.downcase+" "+post.posted.to_s
+	}.each do |result|
+		post = Posts.find_by_cid result.cid
+		next if post==nil
+	#	next if(post.posted<Time.now.to_i-(60*60*24*7*2))
+		if(last!=post.city)
+%>			<h1><%= post.city.upcase %></h1>
+<%		end
+#		puts "<h1>"+post.city.upcase+"</h1>" if last!=post.city
+		last = post.city unless last==post.city
+%>
+		<p class="">
+			<span class="orig">&gt;<%= result.orig %>&lt;</span>
+			<a href="<%= post.link %>"><%= post.title %></a>
+		</p>
+	<% end %>
+
+<!--
+SF:  http://i.imgur.com/TWDrs.png
+LA:  http://i.imgur.com/Xn7xG.jpg
+All: http://i.imgur.com/tsmiR.jpg
+-->

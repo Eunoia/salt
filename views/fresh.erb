@@ -1,0 +1,365 @@
+<script src="127.0.0.1:3000/wo/2663447361:2666643549"></script>
+<script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@city%>.craigslist.org/rid/index.rss&param=posts" ></script>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js?ver=3.1.2'></script>
+<style>
+ui-autocomplete-input * li, ui-autocomplete-input *ul{ 
+	background-color: #FFF;
+	  width: 10em;
+	 list-style: none none; 
+	}
+ui-autocomplete-input * li{
+	 border:1px solid black; 
+	}
+#searchform ul{
+	 display: block; width:100%;  margin: 0px 0px; list-style: none none;
+	}
+#searchform li{
+	 border:0px solid black; display: block; float: left;
+	 height: 80px;width: 25%; margin-bottom: 1ex; 
+}
+input[type="submit"]{ 
+	display: block; margin: auto; margin-top: 1em; 
+	border: 1px solid black; cursor: hand; border-radius: 25px;  
+	height: 40px; background-color: white; width: 100px; 
+	font-size: 120%; }
+fieldset input[type="text"]{
+	 border:1px solid black; font-size: 100%; 
+	border-radius: 5px;  width: 150px; color: gray; }
+input[type="radio"]{
+	 margin-left: 2em; margin-top:.5ex;}
+fieldset{ 
+	border:1px solid gray; border-radius: 25px;}
+legend{
+	 font-size: 120%; font-family: verdana; }
+#nfoBar{ 
+	border-radius: 10px; display: inline; padding-left: 3em;
+	 padding-right: 50%; background-color: yellow; display: none; }
+
+</style> 
+
+<blockquote>
+  <form action="/freshSearch/" id="searchform" method="get">
+    <fieldset id="searchfieldset">
+    <legend id="searchlegend">clRides  </legend>
+      <ul>
+        <li>
+	      <input disabled=disabled id="search" type="text" value="Search...."></input><br>
+    
+           <label>
+            <input type="radio" disabled=disabled name="srchType" value="T" title="search only posting titles">
+              Destination
+          </label> <br>
+		  <label>
+	 <input type="radio" disabled=disabled name="srchType" value="T" title="search only posting titles">
+				  Title Only
+          </label> <br>
+         <label>
+            <input disabled=disabled type="radio" name="srchType" value="A" checked="checked">
+					Entire Post
+          </label> <br>
+
+        </li>
+        <li>
+          Mode:<br>
+          <label>
+            <input type="radio" name="mode" value="T" id="wantedRadio">
+              Wanted
+          </label> <br>
+           <label>
+            <input type="radio" name="mode" value="A" id="offeredRadio">
+            Offered
+          </label><br>          <label>
+            <input type="radio" id="bothRadio" name="mode" value="A" >
+           Both 
+          </label> 
+          </li><li>
+          Leaving:<br>
+          <label>
+            <input type="radio" name="chron" value="T" checked="checked">
+              Today
+          </label> <br>
+			<label><input type="radio" name="chron" value="P">
+			Past
+</label><br>
+          <label>
+            <input type="radio" name="chron" value="A" >
+            In the future
+          </label> 
+          </li>
+        <li>
+          <input disabled=disabled type="submit" value="Search"> 
+        </li>
+      </ul>
+	<span id="nfoBar">Info Bar</span>
+		     </fieldset>
+  </form>
+</blockquote>
+<p id="cont">
+	&nbsp;
+</p>
+<img id="kitten" src="http://placekitten.com/<%=rand(500)%>/<%=rand(500)%>">
+
+<style>
+//input{ text-shadow: 0px 2px 3px #666; }
+legend{ 
+	
+	color: #F8CA00;
+	}
+fieldset{ 
+//	background-color: #E97F02;
+	}
+body{ 
+	//background: #F9CDAD;
+	background-image: url('/patternBG.png');
+	//background-image: url("/bit-tile-blue.gif")}
+
+#cont{ 
+	text-overflow: ellipsis;
+//	background: #FC9D9A;
+	width: 640px;
+	margin: 0 auto;
+	padding: 3em;
+	 }
+.tate img{ 
+	-webkit-transform: rotate(90deg);
+	}
+div.post { 
+	padding-left:2em;
+	padding-bottom:.1ex;
+	margin-bottom:1ex; 
+/*	#ECE8E3; is the backgorund color */
+	border: 1px solid black;
+	 }
+div > p { width: 80%; }
+small{ font-size: 40%; }
+b{ margin-right: 2ex; height: 3ex; }
+/* Nice colors
+.Wanted{ background-color: #7ff777;}
+.Offered{ background-color: #ff6E74; }
+*/
+
+.Wanted{ 
+//	background-color: #FFD1D3;
+//	background-color: #FC9D9A;
+  border-radius: 20px;
+	background: rgba(252,157,154,.5);
+//opacity: .5;
+  }
+
+.Offered{ 
+/*	background-color: #C6FFC3; */
+	background-color: #C8C8A9;
+	background: rgba(200, 200, 169,.5);
+  border-radius: 20px;
+  }
+
+img{ 
+	margin:.2em;
+	border-radius:14px;
+	//float: left; 
+	}
+	
+div.post b{
+	overflow: hidden;
+	white-space: nowrap;
+	display: block;
+	padding:0;
+	text-overflow: ellipsis;
+//	width: 99%;
+	margin: 0;
+	//width: 300px;
+	}
+}
+div.post b{
+	text-decoration: underline overline;
+}
+</style>
+<script>
+//$.getJSON("http://127.0.0.1/wop/2663447361:2666643549?callback=?",
+
+var items = [];
+var cids = [];
+var fetched = ""
+//origs = "";
+pants = "";
+//img = "";
+document.getElementById("kitten").onload = function() { 
+	items = posts["rdf:RDF"].item;
+	for(i = 0; i<items.length; i++){
+//	for(i = 0; i<10; i++){
+		cid = items[i].link.match(/\d+/)[0];
+		title = items[i].title
+		cids.push(cid);
+		link = items[i].link
+		document.getElementById("cont").innerHTML+= 
+			"<div class=post id=\""+cid+"\"><small><a href="+link+">"+cid+ "</a><br></small><b>"+title+"</b></div>";
+	}
+	$.ajax({
+        url: 'http://127.0.0.1/wop/'+cids.join(":"),
+        dataType: "jsonp",
+        jsonpCallback: "_wo_cb",
+        cache: false,
+        timeout: 5000,
+        success: function(data) {
+			wo = data;
+			data = eval('('+data+')');
+			for(var i in data) {	
+				elem = document.getElementById(i+"")
+				if(elem!=null) {
+					if(data[i]=="Offered"){
+						elem.className +=" Offered"
+					}else{
+						elem.className +=" Wanted"
+					}
+					elem.innerHTML += data[i] ;
+				}
+			}
+            $("#test").append(data)
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('error ' + textStatus + " " + errorThrown);
+        }
+    });
+
+	$.ajax({
+	    url: 'http://127.0.0.1/origp/'+cids.join(":"),
+	    dataType: "jsonp",
+	    jsonpCallback: "_orig_cb",
+	    cache: false,
+	    timeout: 5000,
+	    success: function(data) {
+			data = eval('('+data+')');
+			origs = data;
+		},
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert('error ' + textStatus + " " + errorThrown);
+	    }
+	});
+	$.ajax({
+        url: 'http://127.0.0.1/d/'+cids.join(":"),
+        dataType: "jsonp",
+        jsonpCallback: "_dest_cb",
+        cache: false,
+        timeout: 5000,
+        success: function(data) {
+			wo = data;
+			data = eval('('+data+')');
+			for(var i in data) {	
+				var url = "http://maps.googleapis.com/maps/api/"
+				url += "staticmap?sensor=false&maptype=roadmap"
+				url += "&zoom=11&size=512x128&center="
+				elem = document.getElementById(i+"")
+				if(elem!=null) {		
+					var place = data[i];
+					if(place.match(/Canada/i)){
+						url = url.replace('11','2');
+					}
+					if(place=="Mammoth"){
+						place += " Lakes"
+						url = url.replace('11','9')
+					}
+					if(place=="Mexico"){
+						url = url.replace('11','6')
+					}
+					if(place=="california"){
+						url = url.replace('11','5')
+					}
+					if((place+" ").match(/cali\W/i)!=null){
+						place = place.replace(/ cali/i, " California")
+						url = url.replace('11','5');
+					}
+					if(place=="Montana"){
+						url = url.replace('11','7')
+					}
+					if(place=="Florida"){
+						url = url.replace('11','7')
+					}
+					if(place.match(/dakota/i)){
+						if(place.match(/(n(orth)?|s(outh)?)/i)){
+							url = url.replace('11','7')
+						}
+					}
+					if(place=="Tricities"){
+						place = "Tri cities Washington"
+						url = url.replace('11','9'); 
+					}
+					if(place=="East Bay"){
+						place = "oakland"
+					}
+					if(place=="East"){
+						place = "East Point, GA"
+						url = url.replace('11','15')
+					}
+					if(place=="America"){
+						url = url.replace('11','3')
+					}
+					if(place=="East Coast"){
+				//		url = url.replace('512x128','128x512')
+						url = url.replace('11','4')
+						place = "East Coast USA"
+					//	elem.className += " tate"
+					}
+					if(place.match(/Humboldt/i)){
+						place = "Arcata "
+					}
+					if(place.match(/Carolina/i)){
+						url = url.replace('11','7')
+					}
+					if(place!=""){ 						
+						place = place.replace(/ /g,"%20");
+						img = "<img src="+url+place+" />"
+						elem.innerHTML += img;
+						console.log(elem.images)
+					}
+				}
+			}
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            alert('error ' + textStatus + " " + errorThrown);
+        }
+    });
+
+
+}
+document.getElementById("wantedRadio").onclick = function() {
+	posts = document.getElementsByClassName("post");
+	for(i = 0; i<posts.length; i++){
+		if(posts[i].className.match(/wanted/i)){
+			posts[i].style.display ='block' 
+		}
+		if(posts[i].className.match(/offered/i)){
+			posts[i].style.display = 'none'
+		}
+	}
+}
+document.getElementById("bothRadio").onclick = function() {
+	posts = document.getElementsByClassName("post");
+	for(i = 0; i<posts.length; i++){ 
+		posts[i].style.display = 'block' 
+	}
+}
+document.getElementById("offeredRadio").onclick = function() {
+	posts = document.getElementsByClassName("post");
+	for(i = 0; i<posts.length; i++){
+		if(posts[i].className.match(/offered/i)){
+			posts[i].style.display = 'block'
+		}
+		if(posts[i].className.match(/wanted/i)){
+			posts[i].style.display = 'none'
+		}
+	}
+}/*
+setTimeout(function(){
+	imgs = document.getElementsByTagName("img")
+	for(i=0;i<imgs.length;i++){
+		if(imgs[i].src.match(/maps/)!=null){
+			imgs[i].onclick = function(){ 
+				orig = origs[this.parentNode.id]
+				this.src = this.src.replace(/center=.+$/, "center="+orig.replace(/ /g,"%20"));
+			}
+		}
+	}
+}, 3000);
+*/
+//document.getElementsByTagName("img")[4].onclick = function(){ }
+</script>

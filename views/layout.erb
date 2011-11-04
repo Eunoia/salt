@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta charset="utf8">
+  <title><%= @title  %></title>
+<style>
+body{ margin:0 }
+#topbar li{ 
+	font-size: 50%;
+	margin-top: 0;
+//	border:1px solid white; 
+	margin-left: .5em;
+	display: inline; list-style-type: none;
+}
+#topbar ul li span{ font-weight:900; }
+#topbar ul{ 
+	font-size: 50%;
+	padding:0px;
+	background: rgba(0,0,0,0);
+	position:absolute; 
+	right: 4em; 
+	top: -2.9ex;
+	font-size: 100%;
+	margin-left:10em;
+	//border:1px solid white;  
+	display: inline;
+}
+#who{
+	font-size: 200%;
+}
+#topBar{
+
+	border-bottom:1px solid white; 
+	color: #EEE;
+	background: rgba(0,0,0,.75);
+		height:2em;
+	}
+
+#footer{
+	width: 100%;
+	color: #EEE;
+	background-color: #292929;
+	margin: 0px;
+	height: 15em;
+	margin-top:3em;
+	line-height: normal;
+	vertical-align: bottom;
+}
+</style>
+</head>
+<body>
+	<div id="topBar">
+		<span id="who">Salt<span>
+		<ul>
+			<li id="about">about</li>
+			<li id="cities">cities</li>
+			<li id="mode">mode</li>
+			<li id="you">YOU<span>&darr;</span></li>
+		</ul>
+	</div>
+    <%= yield %>
+	<div id="footer">
+		Yay this is a footer!
+	</div>
+</body>
+
+</html>
