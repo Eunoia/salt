@@ -48,8 +48,9 @@ get '/to/:dest/?:mode?' do
 	  @places += ["Santa Barbara", "Isla Vista"]
 	  @banner =  "SB"
 	elsif params[:dest]=~/la/
-	  @places += %w{ La Socal Segundo UCLA Hollywood Venice Pasadena}
-	  @places += ["Los Angeles", "Long Beach","Santa Monica"]
+	  @places += %w{ La Socal Segundo Ucla Hollywood Venice Pasadena}
+	  @places += ["Los Angeles", "Long Beach","Santa Monica","El Segundo"]
+	  @places += ["San Gabriel Valley", "San Fernando Valley",]
 	  @banner = "la"
   elsif params[:dest]=~/sf/i
     @places += %w{ Richmond Fremont Berkeley Oakland Sf}
