@@ -85,8 +85,13 @@ get '/more/*' do
 	params[:splat]
 end
 get '/post/:cid' do
-  @post = Posts.find_by_cid(params[:cid])
-  @result = Results.find_by_cid(params[:cid])
+  @post = Posts.find_by_cid(params[:cid].to_i)
+  @result = Results.find_by_cid(params[:cid].to_i)
+  @title =  @result.dest
+  @title += " from "
+  @title += @post.city.to_s
+  @title += ": "
+  @title += @post.title
 	erb :aPost
 end
 get '/about' do

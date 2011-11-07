@@ -1,12 +1,13 @@
 <style>
 img{ padding: 0px; }
-
 body{ background-color: #CCC; }
-span{ color: #ccc; }
-span{  font-size: 14ex; font-family: arial; font-weight: bold;}
+#from, #to{ color: #ccc; font-size: 14ex; font-family: arial; font-weight: bold;}
+
 #fimg { z-index:-1;position:absolute; top:0px; left:0;  padding-right:0px; }
 
-#footer{ display: none; }
+#footer{ margin-top:50%;
+	//display: none; 
+	}
 #timg { z-index:-1;position:absolute; top:0px; left:630px; padding-left:0px;}
 #to{position:absolute; top:170px; left:640px; padding:0px;}
 #from{  position:absolute; top:170px; left:5px; padding:0px; }
@@ -15,11 +16,10 @@ h4{ position:absolute; top:330px; color: #999; font-size: 200%;
 width: 800px;text-align: justify;left:100px; }
 </style>
 <br />
-
-  <span id="from">FROM</span><span id="to">TO</span><br />
-  
+<span id="from">FROM</span><span id="to">TO</span><br />  
   <!--img id="fimg" src="http://maps.google.com/maps/api/staticmap?center=34.052234,-118.243685&amp;zoom=11&amp;size=625x250&amp;sensor=false" /><img id="timg" src="http://maps.google.com/maps/api/staticmap?center=New York&amp;zoom=11&amp;size=625x250&amp;sensor=false" /-->
   
-<img id="fimg" src="http://maps.google.com/maps/api/staticmap?center=<%=@result.orig%>&amp;zoom=11&amp;size=625x250&amp;sensor=false" /><img id="timg" src="http://maps.google.com/maps/api/staticmap?center=<%=@result.dest%>&amp;zoom=11&amp;size=625x250&amp;sensor=false" >
+<img id="fimg" src="http://maps.google.com/maps/api/staticmap?center=<%=@result.orig%>&amp;zoom=11&amp;size=625x250&amp;sensor=false" />
+<img id="timg" src="http://maps.google.com/maps/api/staticmap?center=<%=@result.dest%>&amp;zoom=11&amp;size=625x250&amp;sensor=false" >
 <h1><%= @post.title%></h1>
 <h4><%= @post.content %></h4>
