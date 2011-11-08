@@ -110,8 +110,10 @@ fieldset{
 	}
 body{ 
 	//background: #F9CDAD;
-	background-image: url('/patternBG.png');
-	//background-image: url("/bit-tile-blue.gif")}
+//	background-image: url('/patternBG.png');
+
+background-image: url('http://subtlepatterns.com/patterns/diagonal-noise.png'); background-attachment: fixed;
+	}
 
 #cont{ 
 	text-overflow: ellipsis;
@@ -142,14 +144,18 @@ b{ margin-right: 2ex; height: 3ex; }
 //	background-color: #FFD1D3;
 //	background-color: #FC9D9A;
   border-radius: 20px;
-	background: rgba(252,157,154,.5);
+	margin-bottom: 1em;
+	background: rgba(252,157,154,.3);
 //opacity: .5;
   }
 
 .Offered{ 
-/*	background-color: #C6FFC3; */
-	background-color: #C8C8A9;
-	background: rgba(200, 200, 169,.5);
+	background-color: #C6FFC3; 
+//	background-color: #C8C8A9;
+//	background: rgba(200, 200, 169,.5);
+	background: rgba(174,226,57,.3);
+	margin-bottom: 3em;
+//background-color:rgba(127, 247, 119,.3);
   border-radius: 20px;
   }
 
@@ -157,7 +163,8 @@ img{
 	margin:.2em;
 	border-radius:14px;
 	//float: left; 
-	}
+	position: relative;
+}
 	
 div.post b{
 	overflow: hidden;
@@ -172,6 +179,9 @@ div.post b{
 }
 div.post b{
 	text-decoration: underline overline;
+}
+body{
+
 }
 </style>
 <script>
@@ -271,6 +281,10 @@ document.getElementById("kitten").onload = function() {
 					if(place=="Montana"){
 						url = url.replace('11','7')
 					}
+					if(place=="Norcal"){
+						url = url.replace('11','5');
+						place = "Chico"
+					}
 					if(place=="Florida"){
 						url = url.replace('11','7')
 					}
@@ -330,34 +344,21 @@ document.getElementById("kitten").onload = function() {
 
 
 }
-document.getElementById("wantedRadio").onclick = function() {
-	posts = document.getElementsByClassName("post");
-	for(i = 0; i<posts.length; i++){
-		if(posts[i].className.match(/wanted/i)){
-			posts[i].style.display ='block' 
-		}
-		if(posts[i].className.match(/offered/i)){
-			posts[i].style.display = 'none'
-		}
-	}
+$("#offeredRadio")[0].onclick = function() {
+	$(".wanted").fadeOut();
+	$(".offered").fadeIn();
 }
-document.getElementById("bothRadio").onclick = function() {
-	posts = document.getElementsByClassName("post");
-	for(i = 0; i<posts.length; i++){ 
-		posts[i].style.display = 'block' 
-	}
+$("#wantedRadio")[0].onclick = function(){
+	$(".wanted").fadeIn();
+	$(".offered").fadeOut();
 }
-document.getElementById("offeredRadio").onclick = function() {
-	posts = document.getElementsByClassName("post");
-	for(i = 0; i<posts.length; i++){
-		if(posts[i].className.match(/offered/i)){
-			posts[i].style.display = 'block'
-		}
-		if(posts[i].className.match(/wanted/i)){
-			posts[i].style.display = 'none'
-		}
-	}
-}/*
+$("#bothRadio")[0].onclick = function(){
+	$(".wanted").fadeIn();
+	$(".offered").fadeIn();
+}
+
+
+/*
 setTimeout(function(){
 	imgs = document.getElementsByTagName("img")
 	for(i=0;i<imgs.length;i++){
