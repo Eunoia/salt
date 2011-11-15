@@ -27,8 +27,10 @@ i = 0
 
 
 get '/' do 
-	i=i+1;
-	"Hello World #{i=i+1}";
+  @title = "Craigslist Rideshare enhancement suite"
+  @to = [:seattle,:sb,:la,:sf,:pdx]
+  @fresh = "sfbay|santabarbara|portland|seattle|losangeles".split("|")
+  erb :slash
 end
 get '/to/:dest/?:mode?' do 
 	@places = []
@@ -56,7 +58,7 @@ get '/to/:dest/?:mode?' do
     @places += %w{ Richmond Fremont Berkeley Oakland Sf}
     @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
     @banner = "SF"
-  elsif params[:dest]=~/p(ortlan)?d(x)?/
+  elsif params[:dest]=~/p(ortlan)?d(x)?/i
     @places += %w{ Portland }
     @banner = "PDX"
   end

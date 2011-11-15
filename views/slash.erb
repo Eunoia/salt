@@ -1,0 +1,52 @@
+<p>
+	Salt is a fresh take on craigslist rideshare
+</p>
+<script>
+var mode=-1;
+</script>
+Are you trying to get somewhere?
+<% @to.each do |t|%>
+<a href=/to/<%= t %>><%= t%></a>
+	<%end%><br>
+Trying to get out of town?
+	<% @fresh.each do |t|%>
+	<a href=/fresh/<%= t %>><%= t%></a>
+		<%end%>
+<br />
+<a name="mode" /></a>
+Are you:<br />
+<p class="button">
+<img src="/wanted.svg" onclick="mode = 1"/><br>
+Looking for a Ride?
+</p><p class="button">
+<img src="/offered.svg" onclick="mode = 0"/>
+Looking for Passengers?
+</p>
+<style>
+img{ 
+	vertical-align:middle;
+	margin:0 auto;
+	height: 250px;
+	margin-top: auto;
+}
+.button {
+	width:300px;
+	height: 300px;
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	margin: 0 auto;
+	padding: 1ex;
+	text-decoration: none;
+	font: 14px/100% Arial, Helvetica, sans-serif;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+	-webkit-border-radius: .5em; 
+	-moz-border-radius: .5em;
+	border-radius: .5em;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	box-shadow: 0 1px 2px rgba(0,0,0,.2);
+	border:1px solid black;
+}
+</style>
