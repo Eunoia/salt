@@ -3,6 +3,7 @@
 
 <span class="title"><%= @banner %></span>
 <img class="la" src="/<%= @banner %>.png" />
+
 <%
 
 	last = ""
@@ -14,24 +15,26 @@
 		Results.find_all_by_wo(@mode, :conditions => cond )
 	end
 	results = results
-	posts = results.collect{ |r| Posts.find_by_cid r.cid }
-	results.sort_by{ |r| 
-	post = posts.find do |p| 
-		if(p==nil)
-			p = Posts.new
-         	p.city = "0"
-		    p.posted = "0"
-		else
-			p.cid==r.cid
-		end
+	cids = results.map{ |r| r.cid}
+	
+	posts = cids.collect{ |cid| Posts.find_by_cid cid }.compact
+	ocities = posts.map{ |p| p.city }.uniq
+%><h1 style="font-family: Airplane;font-size: 200%; position: relative; top: -4ex ; text-transform:lowercase"><span style="text-transform:uppercase">FROM:</span> <%
+	ocities.each do |ocity|
+	%>	<a style="color: black" href="#<%=ocity%>"><%=ocity%></a><%
 	end
-	p.city+" "+r.orig.downcase+" "+p.posted.to_s
-	}.each do |result|
-		post = Posts.find_by_cid result.cid
+%></h1><%
+	posts.sort_by{ |post| 
+				r = results.find{ |r_| r_.cid==post.cid }
+				  post.city+" "+r.orig.downcase+" "+post.posted.to_s
+	}.each do |post|
+		result = Results.find_by_cid post.cid
 		next if post==nil
 	#	next if(post.posted<Time.now.to_i-(60*60*24*7*2))
 		if(last!=post.city)
-%>			<h1 style="font-family: Airplane;font-size: 200%;text-transform:lowercase"><%= post.city.upcase %></h1>
+%>			
+<a name=<%= post.city %>><br>
+<h1 style="font-family: Airplane;font-size: 200%;text-transform:lowercase"><%= post.city.upcase %></h1>
 <%		end
 #		puts "<h1>"+post.city.upcase+"</h1>" if last!=post.city
 		last = post.city unless last==post.city
