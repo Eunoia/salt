@@ -25,7 +25,7 @@
 			p.cid==r.cid
 		end
 	end
-	post.city+" "+r.orig.downcase+" "+post.posted.to_s
+	p.city+" "+r.orig.downcase+" "+p.posted.to_s
 	}.each do |result|
 		post = Posts.find_by_cid result.cid
 		next if post==nil
