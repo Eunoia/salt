@@ -7,11 +7,21 @@ require 'logger'
 set :logging, true
 
 error_logger = Logger.new('errors.log')
+db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 ActiveRecord::Base.establish_connection(
-        :adapter => "sqlite3",
-        :database => "posts.sql"
+  :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
+  :host     => db.host,
+  :username => db.user,
+  :password => db.password,
+  :database => db.path[1..-1],
+  :encoding => 'utf8'
 )
+
+#ActiveRecord::Base.establish_connection(
+#        :adapter => "sqlite3",
+#        :database => "posts.sql"
+#)
 
 class Posts < ActiveRecord::Base
   # validates_uniqueness_of :cid
