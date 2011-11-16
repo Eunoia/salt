@@ -283,7 +283,7 @@ document.getElementById("kitten").onload = function() {
         dataType: "jsonp",
         jsonpCallback: "_dest_cb",
         cache: false,
-        timeout: 1000,
+        timeout: 10000,
         success: function(data) {
 			wo = data;
 			data = eval('('+data+')');
