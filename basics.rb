@@ -2,11 +2,8 @@ require 'rubygems'
 require 'sinatra'
 require 'net/http'
 require 'active_record'
-require 'logger'
 
-set :logging, true
 
-error_logger = Logger.new('errors.log')
 db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
 
 ActiveRecord::Base.establish_connection(
