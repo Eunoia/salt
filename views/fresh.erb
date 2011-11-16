@@ -60,11 +60,11 @@ fieldset{
 blockquote span {
 	font-size: 200%;
 	padding-bottom: 1em;
-
+	padding:1px;
 	text-weight: 800;
 	font-family: sans-serif;
 	text-transform: uppercase;
-	color: #737373;
+	color: black;
 	
 }
 </style> 
@@ -73,7 +73,7 @@ blockquote span {
 
   <form action="/freshSearch/" id="searchform" method="get">
     <fieldset id="searchfieldset">
-    <legend id="searchlegend">	<span>Find Rides from <%=@city%></span>  </legend>
+    <legend id="searchlegend">	<span>Rides from <%=@city%></span>  </legend>
       <ul>
         <li>
 	      <input disabled=disabled id="search" type="text" value="Search...."></input><br>
