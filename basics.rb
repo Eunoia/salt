@@ -58,7 +58,7 @@ get '/to/:dest/?:mode?' do
     @places += %w{ Richmond Fremont Berkeley Oakland Sf}
     @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
     @banner = "SF"
-  elsif params[:dest]=~/p(ortlan)?d(x)?/i
+  elsif params[:dest]=~/(portland|pdx)/i
     @places += %w{ Portland }
     @banner = "PDX"
   end
@@ -76,6 +76,11 @@ get '/fresh/?:city?' do
     else
       @city = params[:city] 
     end
+  end
+  @cl = @city
+  if(@city=='sfbay')
+    @cl = 'sfbay'
+    @city = "SF"
   end
   puts params[:city]+"########"
 	erb :fresh

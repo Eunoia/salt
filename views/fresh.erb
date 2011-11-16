@@ -1,7 +1,8 @@
 <script src="127.0.0.1:3000/wo/2663447361:2666643549"></script>
-<script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@city%>.craigslist.org/rid/index.rss&param=posts" ></script>
+<script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
 <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js?ver=3.1.2'></script>
 <style>
+
 ui-autocomplete-input * li, ui-autocomplete-input *ul{ 
 	background-color: #FFF;
 	  width: 10em;
@@ -29,18 +30,50 @@ input[type="radio"]{
 	 margin-left: 2em; margin-top:.5ex;}
 fieldset{ 
 	border:1px solid gray; border-radius: 25px;}
-legend{
+legend{	
+	background-color: rgba(255,255,255,.6);
+
+	background-image: -webkit-gradient(
+	top,
+		rgba(255,255,255,0),
+		rgba(255,255,255,.5)
+	);
+	border-radius: 10px;
 	 font-size: 120%; font-family: verdana; }
 #nfoBar{ 
 	border-radius: 10px; display: inline; padding-left: 3em;
 	 padding-right: 50%; background-color: yellow; display: none; }
+blockquote{
+	background-image: url('/pdx.png');
+	background-image: url('/<%=@city%>.png');
+	background-position: bottom;
+	padding-top:1ex;
+	margin:0;
+	background-size: 100%;
+	padding-bottom: 1ex;
+	background-repeat: no-repeat;
+}
+fieldset{
+	margin-bottom:10px;
+	background-color: rgba(255,255,255,.6);
+}
+blockquote span {
+	font-size: 200%;
+	padding-bottom: 1em;
 
+	text-weight: 800;
+	font-family: sans-serif;
+	text-transform: uppercase;
+	color: #737373;
+	
+}
 </style> 
 
 <blockquote>
+
   <form action="/freshSearch/" id="searchform" method="get">
     <fieldset id="searchfieldset">
-    <legend id="searchlegend">clRides  </legend>
+    <legend id="searchlegend">	<span>Find Rides from <%=@city%></span>  </legend>
       <ul>
         <li>
 	      <input disabled=disabled id="search" type="text" value="Search...."></input><br>
@@ -309,7 +342,7 @@ document.getElementById("kitten").onload = function() {
 					if(place=="Slc"){
 						place = "Salt Lake City"
 					}
-					if(place=="Arizona"){
+					if(place=="Arizona" || place=="Az"){
 						url = url.replace('11','9');
 					}
 					if(place=="Bay"){

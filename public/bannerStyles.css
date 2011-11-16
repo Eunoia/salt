@@ -90,7 +90,12 @@ background-clip: text;
 
 img { width: auto; }
 
-h1{ font-family: Trebuchet; margin-left:.4em;  }
+h1{ 
+font-family: Airplane;
+font-size: 200%; position: relative; 
+top: -1ex ; text-transform:lowercase	
+}
+h1 a { color:black;}
 span.orig{ 
 	font-family: helvetica;
 	width:10em;
@@ -119,9 +124,7 @@ a{
 //	border:1px solid black;
 	margin-top:0px;
 }
-h1{ 
-	font-family: courier;
-	}
+
 p{
 	margin-left:0px;
 	border-width: 0px;

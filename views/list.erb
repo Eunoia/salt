@@ -19,9 +19,9 @@
 	
 	posts = cids.collect{ |cid| Posts.find_by_cid cid }.compact
 	ocities = posts.map{ |p| p.city }.uniq
-%><h1 style="font-family: Airplane;font-size: 200%; position: relative; top: -4ex ; text-transform:lowercase"><span style="text-transform:uppercase">FROM:</span> <%
+%><h1><span style="text-transform:uppercase">FROM:</span> <%
 	ocities.each do |ocity|
-	%>	<a style="color: black" href="#<%=ocity%>"><%=ocity%></a><%
+	%>	<a href="#<%=ocity%>"><%=ocity%></a><%
 	end
 %></h1><%
 	posts.sort_by{ |post| 
@@ -33,8 +33,8 @@
 	#	next if(post.posted<Time.now.to_i-(60*60*24*7*2))
 		if(last!=post.city)
 %>			
-<a name=<%= post.city %>><br>
-<h1 style="font-family: Airplane;font-size: 200%;text-transform:lowercase"><%= post.city.upcase %></h1>
+<a name="<%= post.city %>">
+<h1 style="top:0"><%= post.city.upcase %></h1>
 <%		end
 #		puts "<h1>"+post.city.upcase+"</h1>" if last!=post.city
 		last = post.city unless last==post.city
