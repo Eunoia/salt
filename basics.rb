@@ -76,7 +76,6 @@ end
 get '/fresh/?:city?' do 
   @title = "Funky Fresh updates from the feeds"
   @city = "sfbay"
-  puts params[:city]
   if params[:city]!=nil and params[:city]=~/(sfbay|pdx|santabarbara|portland|seattle|losangeles)/
     if(params[:city]=~/pdx/i)
       @city = "portland"
@@ -89,8 +88,7 @@ get '/fresh/?:city?' do
     @cl = 'sfbay'
     @city = "SF"
   end
-  puts params[:city]+"########"
-	erb :fresh
+  erb :fresh
 end
 get '/hello/:name' do
 	"Hello, #{params[:name]}"
