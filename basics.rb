@@ -74,7 +74,7 @@ get '/to/:dest/?:mode?' do
 	##{}"Hello #{params[:dest]}";
 end
 get '/fresh/?:city?' do 
-  @title = "Funky Fresh updates from the feeds"
+  @title = "Fresh updates from the feeds"
   @city = "sfbay"
   if params[:city]!=nil and params[:city]=~/(sfbay|pdx|santabarbara|portland|seattle|losangeles)/
     if(params[:city]=~/pdx/i)
