@@ -242,7 +242,7 @@ document.getElementById("kitten").onload = function() {
         dataType: "jsonp",
         jsonpCallback: "_wo_cb",
         cache: false,
-        timeout: 5000,
+        timeout: 10000,
         success: function(data) {
 			wo = data;
 			data = eval('('+data+')');
@@ -269,7 +269,7 @@ document.getElementById("kitten").onload = function() {
 	    dataType: "jsonp",
 	    jsonpCallback: "_orig_cb",
 	    cache: false,
-	    timeout: 5000,
+	    timeout: 10000,
 	    success: function(data) {
 			data = eval('('+data+')');
 			origs = data;
@@ -283,7 +283,7 @@ document.getElementById("kitten").onload = function() {
         dataType: "jsonp",
         jsonpCallback: "_dest_cb",
         cache: false,
-        timeout: 5000,
+        timeout: 1000,
         success: function(data) {
 			wo = data;
 			data = eval('('+data+')');
