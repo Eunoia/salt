@@ -80,7 +80,7 @@ get '/fresh/?:city?' do
     if(params[:city]=~/pdx/i)
       @city = "portland"
       @cl = "PDX"
-    elsif params[:city]=~/losangeles/i
+    elsif params[:city]=~/l(os)?a(ngeles)?/i
       @city = "losangeles"
       @cl = "la"
     else
