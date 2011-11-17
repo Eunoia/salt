@@ -76,14 +76,18 @@ end
 get '/fresh/?:city?' do 
   @title = "Fresh updates from the feeds"
   @city = "sfbay"
-  if params[:city]!=nil and params[:city]=~/(sfbay|pdx|santabarbara|portland|seattle|losangeles)/
+  if params[:city]!=nil and params[:city]=~/(sfbay|pdx|santabarbara|portland|seattle|losangeles)/i
     if(params[:city]=~/pdx/i)
       @city = "portland"
+      @cl = "PDX"
+    elsif params[:city]=~/losangeles/i
+      @city = "losangeles"
+      @cl = "la"
     else
       @city = params[:city] 
     end
   end
-  @cl = @city
+  @cl = @city unless @cl
   if(@city=='sfbay')
     @cl = 'sfbay'
     @city = "SF"
