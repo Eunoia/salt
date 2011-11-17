@@ -4,21 +4,25 @@ require 'net/http'
 require 'active_record'
 
 
-db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+#db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+db = (ENV['DATABASE_URL'] || "sqlite")
+if(db=="sqlite")
+  ActiveRecord::Base.establish_connection(
+          :adapter => "sqlite3",
+          :database => "posts.sql"
+  )
+else
+  db = URI.parse(ENV['DATABASE_URL'])
+  ActiveRecord::Base.establish_connection(
+    :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
+    :host     => db.host,
+    :username => db.user,
+    :password => db.password,
+    :database => db.path[1..-1],
+    :encoding => 'utf8'
+  )
+end
 
-ActiveRecord::Base.establish_connection(
-  :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
-  :host     => db.host,
-  :username => db.user,
-  :password => db.password,
-  :database => db.path[1..-1],
-  :encoding => 'utf8'
-)
-
-#ActiveRecord::Base.establish_connection(
-#        :adapter => "sqlite3",
-#        :database => "posts.sql"
-#)
 
 class Posts < ActiveRecord::Base
   # validates_uniqueness_of :cid
@@ -76,7 +80,8 @@ end
 get '/fresh/?:city?' do 
   @title = "Fresh updates from the feeds"
   @city = "sfbay"
-  if params[:city]!=nil and params[:city]=~/(sfbay|pdx|santabarbara|portland|seattle|losangeles)/i
+  if params[:city]!=nil
+    #(sfbay|pdx|santabarbara|portland|seattle|losangeles)
     if(params[:city]=~/(pdx|portland)/i)
       @cl = "portland"
       @city = "Portland"
@@ -85,10 +90,6 @@ get '/fresh/?:city?' do
       @city = "Los Angeles"
       @cl = "la"
       @banner = "la.png"
-    elsif params[:city]=~/sf(bay)?/i
-      @cl = "sfbay"
-      @city = "San Francisco"
-      @banner = "SF.png"
     elsif params[:city]=~/s(anta)?b(arbara)?/i
       @cl = "santabarbara"
       @city = "Santa Barbara"
@@ -97,12 +98,11 @@ get '/fresh/?:city?' do
       @cl = "seattle"
       @city = "Seattle"
       @banner = "seattle.png"
+    elsif params[:city]=~/sf(bay)?/i
+      @cl = "sfbay"
+      @city = "The bay area"
+      @banner = "SF.png"
     end
-  end
-  @cl = @city unless @cl
-  if(@city=='sfbay')
-    @cl = 'sfbay'
-    @city = "SF"
   end
   erb :fresh
 end
