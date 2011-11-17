@@ -1,13 +1,21 @@
 <script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
-<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js?ver=3.1.2'></script>
-<style>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
 
-ui-autocomplete-input * li, ui-autocomplete-input *ul{ 
+<style>
+.ui-menu-item{
+	background-color: #FFF;
+	  width: 10em;
+	font-size: 130%;
+	font-family: helvetica;
+	 list-style: none none;
+}
+.ui-autocomplete-input  li, .ui-autocomplete-input ul{ 
 	background-color: #FFF;
 	  width: 10em;
 	 list-style: none none; 
 	}
-ui-autocomplete-input * li{
+.ui-autocomplete-input  li{
 	 border:1px solid black; 
 	}
 #searchform ul{
@@ -69,15 +77,14 @@ blockquote span {
 
 <blockquote>
 
-  <form action="/freshSearch/" id="searchform" method="get">
+  <form action="#" id="searchform" method="get">
     <fieldset id="searchfieldset">
     <legend id="searchlegend">	<span>Rides from <%=@city%></span>  </legend>
       <ul>
         <li>
-	      <input disabled=disabled id="search" type="text" value="Search...."></input><br>
     
            <label>
-            <input type="radio" disabled=disabled name="srchType">
+            <input type="radio" name="srchType" checked="checked">
               Destination
           </label> <br>
 		  <label>
@@ -85,9 +92,10 @@ blockquote span {
 				  Title Only
           </label> <br>
          <label>
-            <input disabled=disabled type=radio name="srchType" checked="checked">
+            <input type=radio disabled=disabled name="srchType" >
 					Entire Post
           </label> <br>
+	      <input id="find" type="text" value="Search...."></input><br>
 
         </li>
         <li>
@@ -215,6 +223,7 @@ body{
 
 }
 </style>
+
 <script>
 //$.getJSON("http://127.0.0.1/wop/2663447361:2666643549?callback=?",
 
@@ -223,7 +232,23 @@ var cids = [];
 var fetched = ""
 //origs = "";
 pants = "";
-//img = "";
+dests = "";
+var visibleDestinations = [];
+function unique(arr) {
+  var i,
+      len=arr.length,
+      out=[],
+      obj={};
+
+  for (i=0;i<len;i++) {
+    obj[arr[i]]=0;
+  }
+  for (i in obj) {
+    out.push(i);
+  }
+  return out;
+}
+
 document.getElementById("kitten").onload = function() { 
 	items = posts["rdf:RDF"].item;
 	for(i = 0; i<items.length; i++){
@@ -285,6 +310,23 @@ document.getElementById("kitten").onload = function() {
         success: function(data) {
 			wo = data;
 			data = eval('('+data+')');
+			dests = data;
+			for(i in dests){ visibleDestinations.push(dests[i]) }
+			visibleDestinations = unique(visibleDestinations)
+			$( "#find" ).autocomplete({
+				source: visibleDestinations,
+				select: function(event,ui){ 
+					console.log(ui.item)
+					ids = []
+					for(i in dests){
+						if(ui.item.value!=dests[i]){ ids.push(i)} 
+					}
+					console.log(ids)
+					for(i in ids){
+						$("#"+ids[i]).fadeOut()
+					}
+				}
+			});
 			for(var i in data) {	
 				var url = "http://maps.googleapis.com/maps/api/"
 				url += "staticmap?sensor=false&maptype=roadmap"
@@ -379,7 +421,11 @@ document.getElementById("kitten").onload = function() {
         }
     });
 
-
+	document.getElementById("find").onclick = function(){ 
+		if(this.value.match(/Search/i)){
+			this.value = ""
+		}
+	}
 }
 $("#offeredRadio")[0].onclick = function() {
 	$(".wanted").fadeOut();
@@ -393,8 +439,6 @@ $("#bothRadio")[0].onclick = function(){
 	$(".wanted").fadeIn();
 	$(".offered").fadeIn();
 }
-
-
 /*
 setTimeout(function(){
 	imgs = document.getElementsByTagName("img")
