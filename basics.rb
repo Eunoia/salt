@@ -3,13 +3,16 @@ require 'sinatra'
 require 'net/http'
 require 'active_record'
 
-
-#db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
-db = (ENV['DATABASE_URL'] || "sqlite")
+db = (ENV['DATABASE_URL'] || "dev")
 if(db=="sqlite")
   ActiveRecord::Base.establish_connection(
-          :adapter => "sqlite3",
-          :database => "posts.sql"
+    :adapter  => 'postgresql',
+    :host     => '127.0.0.1',
+    :username => 'shawsome',
+    :password => '',
+    :database => "shawsome_test",
+    :client_min_messages => 'NOTICE',
+    :encoding => 'utf8'
   )
 else
   db = URI.parse(ENV['DATABASE_URL'])
@@ -19,11 +22,12 @@ else
     :username => db.user,
     :password => db.password,
     :database => db.path[1..-1],
-  #  :client_min_messages => 'NOTICE',
+    :client_min_messages => 'NOTICE',
     :encoding => 'utf8'
   )
 end
-puts ActiveRecord::Base.client_min_messages
+
+
 
 class Posts < ActiveRecord::Base
   # validates_uniqueness_of :cid
@@ -50,8 +54,7 @@ get '/to/:dest/?:mode?' do
 	  @mode=nil
 	  @modeString = "All Posts to"
 	else 
-    	@mode = params[:mode]=~/offer/i? 1 : 0
-	  #@mode = 1
+    @mode = params[:mode]=~/offer/i? 1 : 0
     @modeString = @mode==1 ? "Find rides to" : "Passengers to"
   end
 	if    params[:dest]=~/seattle/i

@@ -10,11 +10,15 @@
 	cond = @places.map{ |place| " dest=\"#{place}\" or "}.join
 	cond = cond[0..-4]
 	results = if(@mode==nil)
-		Results.find(:all, @mode, :conditions => cond )
+		@places.collect do |place|
+			Results.find(:all, @mode, :conditions => "dest = \'#{place}\'" )
+		end
 	else
-		Results.find_all_by_wo(@mode, :conditions => cond )
+		@places.collect do |place|
+			Results.find_all_by_wo(@mode, :conditions => "dest = \'#{place}\'" )
+		end
 	end
-	results = results
+	results = results.flatten
 	cids = results.map{ |r| r.cid}
 	
 	posts = cids.collect{ |cid| Posts.find_by_cid cid }.compact
