@@ -23,7 +23,7 @@ else
     :encoding => 'utf8'
   )
 end
-
+puts ActiveRecord::Base.client_min_messages
 
 class Posts < ActiveRecord::Base
   # validates_uniqueness_of :cid
