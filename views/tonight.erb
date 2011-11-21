@@ -1,0 +1,116 @@
+	<style>
+		@font-face {
+			font-family: "Maagkramp";
+			src: url("/maagkramp_by_ficod.ttf") format("truetype");
+		}
+		body{
+			margin:0;
+			background-repeat: no-repeat;
+			background-size: cover;
+			background-attachment: fixed;
+			background-image: url('/<%=@bgImg%>');
+		}
+		#boxes a:link{
+			color: black;
+			display: block;
+		//	border: 1px solid green;
+			padding-bottom: .1ex;
+		//	padding: 3em;
+			text-align: center;
+			font-size: 120%;
+		}
+		#boxes{
+			font-family: Raleway;
+			font-weight: 700;
+			position: absolute; right: 8%; top: 6em;
+			border:1px solid white;
+			padding:2em 2em 1em 2em; 
+			display: block; border-radius: 10px; 
+			width: 9em; background: rgba(255,255,255,.4) }
+		#title{
+			font-family: Maagkramp;
+			background-color: #333;
+			-webkit-background-clip: text;
+			-moz-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
+			//color: #CCC;
+			font-size:279px; font-weight: bold; margin-left: 10%;
+			//font-family: Arial; 
+			width: auto;
+			padding:0ex;  }
+		img{ 
+			border-radius:2px; width: 100%; 
+			z-index:-1;position:absolute; left:0;}
+		.post{
+			overflow: hidden;
+			margin-left: 10%;
+			border:1px solid #CCC;
+			width: 60%;
+			border-radius: 5px;
+			text-overflow: ellipsis;
+			font-size: 120%;
+			font-family: sans-serif;
+			padding: .5ex .5ex .5ex 2ex;
+			color: black;
+			background-color: rgba(255,255,255,.6);
+			/*color: white;
+			background-color: rgba(0,0,0,.2);*/
+		}
+		.post b{ 
+			margin: auto 0;
+			font-size: 120%; text-transform: uppercase;
+			letter-spacing: .12em;
+			border-radius: 5px;
+			background-color:rgba(0,0,0,.8);
+			text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+			/*background-color:rgba(255,255,255,.8);
+			text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;*/
+		}
+		.post a:link {
+		//	font-size: 30%;
+			color: #FFF;
+			float: right;
+			display: block;
+		//	clear: both;
+			//width: 1em;
+			padding:.1ex .1ex .1ex .1ex;
+			//border:1px solid white;
+			text-align: top;
+			border-radius: 3px;
+			background: rgba(0,0,0,.5);
+			text-overflow: ellipsis;
+		}
+		.post a:visited{
+			color: rgba(255,255,255,.1);
+			
+		}
+		div#footer{ display:none; }
+	</style>
+		<div id="boxes">
+			<a href="/tonight/seattle">Seattle</a><br />
+			<a href="/tonight/pdx">PDX</a><br />
+			<a href="/tonight/sf">SF</a><br />
+			<a href="/tonight/db">SB</a><br />
+			<a href="/tonight/la">LA</a><br />
+		</div>
+		<span id="title">[<%=@title%>]</span>
+		<%
+		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
+		results = Results.find(:all, :conditions => " leaving=#{today}")
+		posts = Posts.find(results.map{|r| r.cid })
+		posts = posts.select{ |p| p.city==@clName }
+		%>
+		<%
+		posts.each do |post|
+		%>
+		<p class="post">
+			<% dest = Results.find(post.cid).dest %>
+			<% next if dest==""%>
+			<%= post.title.sub(/#{dest}/i," <b> &nbsp;#{dest} </b>&nbsp; ") %>
+			<a href="<%= post.link%>">(+)<%# post.cid%></a>
+		<% end%>
+		<!--p class="post">
+			Ride offer to<b> Sacramento </b> tonight at 7 (SF Valley)
+		</p-->

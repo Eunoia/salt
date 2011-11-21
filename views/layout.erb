@@ -2,7 +2,13 @@
 <head>
   <meta charset="utf8">
   <title><%= @title  %></title>
+	<META NAME="Description" CONTENT="A fresh take on craigslist rideshare" />
+	
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+
 <style>
+
 @font-face {
   font-family: "Governor";
   src: url("/governor.ttf") format("truetype");
@@ -16,7 +22,7 @@
 	src:url('/raleway_thin.ttf') format("truetype");
 }	
 
-body{ margin:0 }
+body{ margin:0; height:100%; }
 #topbar li{ 
 //	font-size: 50%;
 	margin-top: 0;
@@ -24,7 +30,7 @@ body{ margin:0 }
 	margin-left: .5em;
 	display: inline; list-style-type: none;
 }
-#topbar ul li span{ font-weight:900; }
+//#topbar ul li span{ font-weight:900; }
 #topbar ul{ 
 	padding:0px;
 	background: rgba(0,0,0,0);
@@ -54,7 +60,7 @@ span#who{
 	color: #EEE;
 	background-color: #292929;
 	margin: 0px;
-	height: 15em;
+//	height: 5em;
 	margin-top:3em;
 	line-height: normal;
 	vertical-align: bottom;
@@ -63,12 +69,22 @@ span#who{
 </head>
 <body>
 	<div id="topBar">
-		<span id="who">SALT</span>
-		<ul>&nbsp;
+		<span id="who">salt</span>
+		<ul class="topNav">
 			<li id="about">about</li>
-			<li id="cities">cities</li>
+			<li id="cities">cities
+				<!--ul class="subnav" styles="display:none">  
+		            <li><a href="#">Seattle</a></li>  
+		            <li><a href="#">Portland</a></li>  
+		            <li><a href="#">Bay Area</a></li>  
+		            <li><a href="#">Monterey</a></li>  
+		            <li><a href="#">Santa Barbara</a></li>  
+		            <li><a href="#">Los Angeles</a></li>  
+		            <li><a href="#">San Diego</a></li>  
+		        </ul-->
+			</li>
 			<li id="mode">mode</li>
-			<li id="you">YOU<span>&darr;</span></li>
+			<li id="you">YOU<!--<span>&darr;</span>--></li>
 		</ul>
 	</div>
     <%= yield %>
@@ -76,5 +92,6 @@ span#who{
 		Yay this is a footer!
 	</div>
 </body>
+
 
 </html>
