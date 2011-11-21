@@ -36,7 +36,8 @@
 			color: transparent;
 			text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
 			//color: #CCC;
-			font-size:279px; font-weight: bold; margin-left: 10%;
+			font-size:279px; font-weight: bold;
+			 margin-left: 1%;
 			//font-family: Arial; 
 			width: auto;
 			padding:0ex;  }
@@ -95,9 +96,10 @@
 			<a href="/tonight/db">SB</a><br />
 			<a href="/tonight/la">LA</a><br />
 		</div>
-		<span id="title">[<%=@title%>]</span>
+		<span id="title">[<%=@name%>]</span>
 		<%
 		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
+		puts today
 		results = Results.find(:all, :conditions => " leaving=#{today}")
 		posts = Posts.find(results.map{|r| r.cid })
 		posts = posts.select{ |p| p.city==@clName }
@@ -111,6 +113,7 @@
 			<%= post.title.sub(/#{dest}/i," <b> &nbsp;#{dest} </b>&nbsp; ") %>
 			<a href="<%= post.link%>">(+)<%# post.cid%></a>
 		<% end%>
+		<p style="height:100%"></p>
 		<!--p class="post">
 			Ride offer to<b> Sacramento </b> tonight at 7 (SF Valley)
 		</p-->

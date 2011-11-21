@@ -107,26 +107,26 @@ get '/fresh/?:city?' do
   erb :fresh
 end
 get '/tonight/?:city?' do
-  @title = "Get out tonight"
+  @title = "Leaving Today |"
   if(params[:city]=~/(pdx|portland)/i)
     @dbName = "portland"
     @city = "Portland"
     @bg = "PDX.png"
   elsif params[:city]=~/l(os)?a(ngeles)?/i
-    @dbName = "Los Angeles"
-    @city = "la"
-    @bg = "laBG.jpg"
+    @clName = "losangeles"
+    @name = "la"
+    @bgImg = "laBG.jpg"
   elsif params[:city]=~/s(anta)?b(arbara)?/i
     @cl = "santabarbara"
-    @city = "Santa Barbara"
-    @banner = "SB.png"
+    @city = "sb"
+    @banner = "sb1BG.jpg"
   elsif params[:city]=~/sea(ttle)?/i
-    @cl = "seattle"
-    @city = "Seattle"
-    @banner = "seattle.png"
-  elsif params[:city]=~/sf(bay)?/i
+    @clName = "seattle"
+    @name = "sea"
+    @bgImg = "seattle#{(rand*10%2).round}BG.jpg"
+  else #if params[:city]=~/sf(bay)?/i
     @clName = "sfbay"
-    @title = "sf"
+    @name = "SF"
     @bgImg = "sf#{(rand*10%5).round}BG.jpg"
   end
   erb :tonight
