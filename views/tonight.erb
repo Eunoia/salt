@@ -99,8 +99,8 @@
 		<span id="title">[<%=@name%>]</span>
 		<%
 		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
-		puts today
 		results = Results.find(:all, :conditions => " leaving=#{today}")
+		puts __LINE__
 		posts = Posts.find(results.map{|r| r.cid })
 		posts = posts.select{ |p| p.city==@clName }
 		%>

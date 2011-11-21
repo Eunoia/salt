@@ -19,6 +19,7 @@ else
     :username => db.user,
     :password => db.password,
     :database => db.path[1..-1],
+    :client_min_messages => 'NOTICE'
     :encoding => 'utf8'
   )
 end
