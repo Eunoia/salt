@@ -4,14 +4,14 @@ require 'net/http'
 require 'active_record'
 
 db = (ENV['DATABASE_URL'] || "dev")
-if(db=="sqlite")
+if(db=="dev")
   ActiveRecord::Base.establish_connection(
     :adapter  => 'postgresql',
     :host     => '127.0.0.1',
     :username => 'shawsome',
     :password => '',
     :database => "shawsome_test",
-    :client_min_messages => 'NOTICE',
+    :client_min_messages => 0,
     :encoding => 'utf8'
   )
 else
@@ -27,7 +27,8 @@ else
   )
 end
 
-
+#db = URI.parse(ENV['DATABASE_URL'])
+#ActiveRecord::Base.establish_connection(:adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme, :host     => db.host, :username => db.user,:password => db.password,:database => db.path[1..-1],:client_min_messages => 0,:encoding => 'utf8')
 
 class Posts < ActiveRecord::Base
   # validates_uniqueness_of :cid
@@ -110,7 +111,7 @@ get '/fresh/?:city?' do
   end
   erb :fresh
 end
-get '/tonight/?:city?' do
+get '/today/?:city?' do
   @title = "Leaving Today |"
   if(params[:city]=~/(pdx|portland)/i)
     @dbName = "portland"
