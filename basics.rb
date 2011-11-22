@@ -128,12 +128,13 @@ get '/today/?:city?' do
   elsif params[:city]=~/sea(ttle)?/i
     @clName = "seattle"
     @name = "sea"
-    @bgImg = "seattle#{(rand*10%2).round}BG.jpg"
+    @bgImg = "seattle#{(rand*10%1).round}BG.jpg"
   elsif params[:city]=~/sf(bay)?/i
     @clName = "sfbay"
     @name = "SF"
     @bgImg = "sf#{(rand*10%5).round}BG.jpg"
   end
+  @title += " #{@name.upcase}"
   erb :tonight
 end
 get '/hello/:name' do

@@ -118,7 +118,9 @@
 		<span id="title">[<%=@name%>]</span>
 		<%
 		if(@name==nil)
-			%><span class="explanation">Howdy, friend, wondering what this is? <span class="who" style="color: black; font-size:120%">salt</span>  allows you to effortlessly find rides or passages along the route you are traveling without the difficulty that craigslist brings. To get started just select an origin from the box on the right.  Oh, and if you're interested in saving your favorite posts, register an account, it's easy!</span><%
+			%><span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium that other sites bring. To get started, just select an origin from the box on the right.  
+			<!-- <br>
+						Oh, and if you're interested in  your favorite posts, register an account, it's easy! --></span><%
 		else
 		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
 		results = Results.find(:all, :conditions => " leaving=#{today}")
