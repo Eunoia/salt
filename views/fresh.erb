@@ -1,5 +1,5 @@
 <script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
-<script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
+
 
 
 <style>
@@ -110,7 +110,7 @@ blockquote span {
             <input type=radio disabled=disabled name="srchType" >
 					Entire Post
           </label> <br>
-	      <input id="find" type="text" value="Search...."></input><br>
+	      <input id="find" type="text" disabled=disabled value="Search...."></input><br>
 
         </li>
         <li>
@@ -141,7 +141,7 @@ blockquote span {
           </label> 
           </li>
         <li>
-          <input disabled=disabled type="submit" value="Search"> 
+          <input type="submit" disabled=disabled id="resetForm" value="Search"> 
         </li>
       </ul>
 	<span id="nfoBar">Info Bar</span>
@@ -263,6 +263,10 @@ function unique(arr) {
   }
   return out;
 }
+document.getElementById("resetForm").onclick = function(){
+	document.getElementById("find").value = "Search...";
+	document.getElementById("bothRadio").checked = true;
+}
 
 document.getElementById("kitten").onload = function() { 
 	items = posts["rdf:RDF"].item;
@@ -337,12 +341,13 @@ document.getElementById("kitten").onload = function() {
 					for(i in dests){
 						if(ui.item.value!=dests[i]){ ids.push(i)} 
 					}
-					console.log(ids)
+
 					for(i in ids){
 						$("#"+ids[i]).fadeOut()
 					}
 				}
 			});
+			document.getElementById("find").disabled=false;
 			for(var i in data) {	
 				var url = "http://maps.googleapis.com/maps/api/"
 				url += "staticmap?sensor=false&maptype=roadmap"

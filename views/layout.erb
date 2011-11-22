@@ -6,7 +6,7 @@
 	
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
 <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-
+<script src="/jquery.scrollTo-1.4.2-min.js"></script>
 <style>
 
 @font-face {
@@ -20,6 +20,10 @@
 @font-face {
 	font-family: "Raleway";
 	src:url('/raleway_thin.ttf') format("truetype");
+}
+@font-face {
+	font-family: "Liberator";
+	src:url('/Liberator.otf') format("opentype");
 }	
 
 body{ margin:0; height:100%; }
@@ -29,6 +33,9 @@ body{ margin:0; height:100%; }
 //	border:1px solid white; 
 	margin-left: .5em;
 	display: inline; list-style-type: none;
+}
+#topbar a:link{
+	color: white;
 }
 //#topbar ul li span{ font-weight:900; }
 #topbar ul{ 
@@ -42,7 +49,7 @@ body{ margin:0; height:100%; }
 	//border:1px solid white;  
 	display: inline;
 }
-span#who{
+span.who{
 	font-family: Governor;
 	color: white;
 	font-size: 200%;
@@ -69,27 +76,18 @@ span#who{
 </head>
 <body>
 	<div id="topBar">
-		<span id="who">salt</span>
+		<span class="who">salt</span>
 		<ul class="topNav">
-			<li id="about">about</li>
-			<li id="cities">cities
-				<!--ul class="subnav" styles="display:none">  
-		            <li><a href="#">Seattle</a></li>  
-		            <li><a href="#">Portland</a></li>  
-		            <li><a href="#">Bay Area</a></li>  
-		            <li><a href="#">Monterey</a></li>  
-		            <li><a href="#">Santa Barbara</a></li>  
-		            <li><a href="#">Los Angeles</a></li>  
-		            <li><a href="#">San Diego</a></li>  
-		        </ul-->
-			</li>
-			<li id="mode">mode</li>
-			<li id="you">YOU<!--<span>&darr;</span>--></li>
+			<li>&nbsp;</li>
+			<li id="about"><a href="/to/sfbay">/tonight/</a></li>
+			<li id="cities"><a href="/fresh/sfbay">/fresh/</a></li>
+			<li id="mode"><a href="/today">/today/</a></li>
+			<li id="you">login<!--<span>&darr;</span>--></li>
 		</ul>
 	</div>
     <%= yield %>
 	<div id="footer">
-		Yay this is a footer!
+		Footer message
 	</div>
 </body>
 

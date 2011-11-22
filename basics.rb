@@ -51,36 +51,36 @@ get '/' do
 end
 get '/to/:dest/?:mode?' do 
 	@places = []
-	if(params[:mode]==nil)
+	if    params[:dest]=~/seattle/i
+		@places +=%w{ Seattle Kirkland Tacoma Everett Redmond }
+		@banner = "Seattle"
+	elsif params[:dest]=~/(pdx|portland)/i
+    @places += %w{ Portland Beaverton Hillsborough}
+    @banner = "PDX"
+	elsif params[:dest]=~/(santabarbara|sb)/i
+	  @places += %w{ Goleta Montecito Carpinteria Ucsb}
+	  @places += ["Santa Barbara", "Isla Vista"]
+	  @banner =  "SB"
+	elsif params[:dest]=~/(la|lax|losangeles)/i
+	  @places += %w{ La Socal Segundo Ucla Hollywood Venice Pasadena}
+	  @places += ["Los Angeles", "Long Beach","Santa Monica","El Segundo"]
+	  @places += ["San Gabriel Valley", "San Fernando Valley",]
+	  @banner = "la"
+  else
+    @places += %w{ Richmond Fremont Berkeley Oakland Sf}
+    @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
+    @banner = "SF"
+  end
+  
+  if(params[:mode]==nil)
 	  @mode=nil
 	  @modeString = "All Posts to"
 	else 
     @mode = params[:mode]=~/offer/i? 1 : 0
     @modeString = @mode==1 ? "Find rides to" : "Passengers to"
   end
-	if    params[:dest]=~/seattle/i
-		@places +=%w{ Seattle Kirkland Tacoma Everett Redmond }
-		@banner = "Seattle"
-	elsif params[:dest]=~/s(anta)? ?b(arbara)?/i
-	  @places += %w{ Goleta Montecito Carpinteria Ucsb}
-	  @places += ["Santa Barbara", "Isla Vista"]
-	  @banner =  "SB"
-	elsif params[:dest]=~/la/
-	  @places += %w{ La Socal Segundo Ucla Hollywood Venice Pasadena}
-	  @places += ["Los Angeles", "Long Beach","Santa Monica","El Segundo"]
-	  @places += ["San Gabriel Valley", "San Fernando Valley",]
-	  @banner = "la"
-  elsif params[:dest]=~/sf/i
-    @places += %w{ Richmond Fremont Berkeley Oakland Sf}
-    @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
-    @banner = "SF"
-  elsif params[:dest]=~/(portland|pdx)/i
-    @places += %w{ Portland }
-    @banner = "PDX"
-  end
-	@title = "Rides to #{params[:dest]}"
+	@title = "Rides to #{@banner}"
 	erb :list
-	##{}"Hello #{params[:dest]}";
 end
 get '/fresh/?:city?' do 
   @title = "Fresh updates from the feeds"
@@ -103,7 +103,7 @@ get '/fresh/?:city?' do
       @cl = "seattle"
       @city = "Seattle"
       @banner = "seattle.png"
-    elsif params[:city]=~/sf(bay)?/i
+    else #if params[:city]=~/sf(bay)?/i
       @cl = "sfbay"
       @city = "The bay area"
       @banner = "SF.png"
@@ -115,21 +115,21 @@ get '/today/?:city?' do
   @title = "Leaving Today |"
   if(params[:city]=~/(pdx|portland)/i)
     @dbName = "portland"
-    @city = "Portland"
-    @bg = "PDX.png"
+    @name = "pdx"
+    @bgImg = "pdx#{(rand*10%5).round}BG.jpg"
   elsif params[:city]=~/l(os)?a(ngeles)?/i
     @clName = "losangeles"
     @name = "la"
     @bgImg = "laBG.jpg"
   elsif params[:city]=~/s(anta)?b(arbara)?/i
     @cl = "santabarbara"
-    @city = "sb"
-    @banner = "sb1BG.jpg"
+    @name = "sb"
+    @bgImg = "sb1BG.jpg"
   elsif params[:city]=~/sea(ttle)?/i
     @clName = "seattle"
     @name = "sea"
     @bgImg = "seattle#{(rand*10%2).round}BG.jpg"
-  else #if params[:city]=~/sf(bay)?/i
+  elsif params[:city]=~/sf(bay)?/i
     @clName = "sfbay"
     @name = "SF"
     @bgImg = "sf#{(rand*10%5).round}BG.jpg"

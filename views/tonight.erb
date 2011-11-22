@@ -5,10 +5,15 @@
 		}
 		body{
 			margin:0;
+			<% if(@bgImg!=nil)%>
+			background-image: url('/<%=@bgImg%>');
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-attachment: fixed;
-			background-image: url('/<%=@bgImg%>');
+			<% else %>
+			background-image: url('/xv.png');
+			
+			<% end %>
 		}
 		#boxes a:link{
 			color: black;
@@ -22,7 +27,7 @@
 		#boxes{
 			font-family: Raleway;
 			font-weight: 700;
-			position: absolute; right: 8%; top: 6em;
+			position: absolute; right: 1em; top: 5em;
 			border:1px solid white;
 			padding:2em 2em 1em 2em; 
 			display: block; border-radius: 10px; 
@@ -41,9 +46,9 @@
 			//font-family: Arial; 
 			width: auto;
 			padding:0ex;  }
-		img{ 
-			border-radius:2px; width: 100%; 
-			z-index:-1;position:absolute; left:0;}
+		//img{ 
+		//	border-radius:2px; width: 100%; 
+		//	z-index:-1;position:absolute; left:0;}
 		.post{
 			overflow: hidden;
 			margin-left: 10%;
@@ -64,8 +69,8 @@
 			font-size: 120%; text-transform: uppercase;
 			letter-spacing: .12em;
 			border-radius: 5px;
-			background-color:rgba(0,0,0,.8);
-			text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
+			background-color:rgba(255,255,255,.8);
+			//text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
 			/*background-color:rgba(255,255,255,.8);
 			text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;*/
 		}
@@ -83,6 +88,20 @@
 			background: rgba(0,0,0,.5);
 			text-overflow: ellipsis;
 		}
+		.explanation{
+			border:1px solid black;
+			padding-left:2em;
+			padding-top: .4em;
+			padding-bottom: .4em;
+			padding-right: 2em;
+			text-align: justify;
+			border-left:0px solid white;
+			border-right:0px solid white;
+			width: 20em;
+			margin: 0 auto;
+			
+			display: block;
+		}
 		.post a:visited{
 			color: rgba(255,255,255,.1);
 			
@@ -90,14 +109,17 @@
 		div#footer{ display:none; }
 	</style>
 		<div id="boxes">
-			<a href="/tonight/seattle">Seattle</a><br />
-			<a href="/tonight/pdx">PDX</a><br />
-			<a href="/tonight/sf">SF</a><br />
-			<a href="/tonight/sb">SB</a><br />
-			<a href="/tonight/la">LA</a><br />
+			<a href="/today/seattle">Seattle</a><br />
+			<a href="/today/pdx">PDX</a><br />
+			<a href="/today/sf">SF</a><br />
+			<a href="/today/sb">SB</a><br />
+			<a href="/today/la">LA</a><br />
 		</div>
 		<span id="title">[<%=@name%>]</span>
 		<%
+		if(@name==nil)
+			%><span class="explanation">Howdy, friend, wondering what this is? <span class="who" style="color: black; font-size:120%">salt</span>  allows you to effortlessly find rides or passages along the route you are traveling without the difficulty that craigslist brings. To get started just select an origin from the box on the right.  Oh, and if you're interested in saving your favorite posts, register an account, it's easy!</span><%
+		else
 		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
 		results = Results.find(:all, :conditions => " leaving=#{today}")
 		puts __LINE__
@@ -106,14 +128,75 @@
 		%>
 		<%
 		posts.each do |post|
+			dest = Results.find(post.cid).dest
+			next if dest==""
+			post.title.sub!(/#{dest}/i," <b class=dest> &nbsp;#{dest} </b>&nbsp; ")
+			unless(post.title=~/<b>/)
+				post.title.sub!(/ #{dest.scan(/[A-Z]/).join} /i," <b class=dest> &nbsp;#{dest} </b>&nbsp; ")
+			end
 		%>
-		<p class="post">
-			<% dest = Results.find(post.cid).dest %>
-			<% next if dest==""%>
-			<%= post.title.sub(/#{dest}/i," <b> &nbsp;#{dest} </b>&nbsp; ") %>
-			<a href="<%= post.link%>">(+)<%# post.cid%></a>
+		<p id="<%=post.cid %>" class="post">
+			<%= post.title %>
+			<a class="inna" name="<%= post.cid %>" href="<%=post.link %>">(+)<%# post.cid%></a>
 		<% end%>
+		<%end%>
 		<p style="height:100%"></p>
-		<!--p class="post">
-			Ride offer to<b> Sacramento </b> tonight at 7 (SF Valley)
-		</p-->
+
+<script>
+/*
+function getDest(cid){
+	dest = ""
+	$.ajax({	
+	   url:'http://50.18.139.191/d/'+cid,
+	    dataType: "jsonp",
+	    jsonpCallback: "_dest_cb",
+	    cache: false,
+	    timeout: 10000,
+	    success: function(data) {
+			data = eval('('+data+')');
+			dest = data[cid];
+		},
+	    error: function(jqXHR, textStatus, errorThrown) {
+	        alert('error ' + textStatus + " " + errorThrown);
+	    }
+	});
+}
+var origs = "";
+url = "http://maps.googleapis.com/maps/api/staticmap?sensor=false"
+url += "&maptype=roadmap&zoom=11&size=406x256&center="
+for(i = 0 ; i<$(".inna").length; i++){
+	$(".inna")[i].onclick = function(){
+		cid = this.name;
+		$.ajax({
+			
+		   url:'http://50.18.139.191/origp/'+this.name,
+		    dataType: "jsonp",
+		    jsonpCallback: "_orig_cb",
+		    cache: false,
+		    timeout: 10000,
+		    success: function(data) {
+				data = eval('('+data+')');
+				origs = data;
+				parent = $("#"+cid)[0]
+				parent.style.width = "850px"
+				orig = origs[cid]
+				origURL = url.replace("11","13")+orig.replace(/ /g,"%20")
+				dest = parent.children[0].innerText.replace(/  +/,"")
+				destURL = url+dest.replace(/ /g,"%20")
+				parent.innerHTML += "<br><img src="+origURL+"><img src="+destURL+">"
+			},
+		    error: function(jqXHR, textStatus, errorThrown) {
+		        alert('error ' + textStatus + " " + errorThrown);
+		    }
+		});
+		return(false)
+	}
+}
+
+*/
+</script>
+
+
+
+
+
