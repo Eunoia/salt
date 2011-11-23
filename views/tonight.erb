@@ -18,9 +18,7 @@
 		#boxes a:link{
 			color: black;
 			display: block;
-		//	border: 1px solid green;
 			padding-bottom: .1ex;
-		//	padding: 3em;
 			text-align: center;
 			font-size: 120%;
 		}
@@ -36,7 +34,7 @@
 			font-family: Maagkramp;
 			background-color: #333;
 			-webkit-background-clip: text;
-			-moz-background-clip: text;
+ -moz-background-clip: content;    
 			background-clip: text;
 			color: transparent;
 			text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
@@ -46,9 +44,6 @@
 			//font-family: Arial; 
 			width: auto;
 			padding:0ex;  }
-		//img{ 
-		//	border-radius:2px; width: 100%; 
-		//	z-index:-1;position:absolute; left:0;}
 		.post{
 			overflow: hidden;
 			margin-left: 10%;
@@ -61,8 +56,6 @@
 			padding: .5ex .5ex .5ex 2ex;
 			color: black;
 			background-color: rgba(255,255,255,.6);
-			/*color: white;
-			background-color: rgba(0,0,0,.2);*/
 		}
 		.post b{ 
 			margin: auto 0;
@@ -70,16 +63,11 @@
 			letter-spacing: .12em;
 			border-radius: 5px;
 			background-color:rgba(255,255,255,.8);
-			//text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
-			/*background-color:rgba(255,255,255,.8);
-			text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;*/
 		}
 		.post a:link {
-		//	font-size: 30%;
 			color: #FFF;
 			float: right;
 			display: block;
-		//	clear: both;
 			//width: 1em;
 			padding:.1ex .1ex .1ex .1ex;
 			//border:1px solid white;
@@ -107,7 +95,7 @@
 			
 		}
 		div#footer{ display:none; }
-	</style>
+		</style>
 		<div id="boxes">
 			<a href="/today/seattle">Seattle</a><br />
 			<a href="/today/pdx">PDX</a><br />
@@ -116,87 +104,93 @@
 			<a href="/today/la">LA</a><br />
 		</div>
 		<span id="title">[<%=@name%>]</span>
+		<%if(@name==nil) %>
+			<style>
+			#boxes{
+				border:1px solid black;
+				background-color: rgba(152,152,152,.2);
+			}
+			</style>
+			<span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium that other sites bring. To get started, just select your city from the box on the right.</span>
 		<%
-		if(@name==nil)
-			%><span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium that other sites bring. To get started, just select an origin from the box on the right.  
-			<!-- <br>
-						Oh, and if you're interested in  your favorite posts, register an account, it's easy! --></span><%
 		else
-		today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
-		results = Results.find(:all, :conditions => " leaving=#{today}")
-		puts __LINE__
-		posts = Posts.find(results.map{|r| r.cid })
-		posts = posts.select{ |p| p.city==@clName }
-		%>
-		<%
-		posts.each do |post|
-			dest = Results.find(post.cid).dest
-			next if dest==""
-			post.title.sub!(/#{dest}/i," <b class=dest> &nbsp;#{dest} </b>&nbsp; ")
-			unless(post.title=~/<b>/)
-				post.title.sub!(/ #{dest.scan(/[A-Z]/).join} /i," <b class=dest> &nbsp;#{dest} </b>&nbsp; ")
-			end
-		%>
-		<p id="<%=post.cid %>" class="post">
-			<%= post.title %>
-			<a class="inna" name="<%= post.cid %>" href="<%=post.link %>">(+)<%# post.cid%></a>
-		<% end%>
+			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
+			results = Results.find(:all, :conditions => " leaving=#{today}")
+			puts __LINE__
+			posts = Posts.find(results.map{|r| r.cid })
+			posts = posts.select{ |p| p.city==@clName }
+			posts.each do |post|
+				dest = Results.find(post.cid).dest
+				next if dest==""
+				b = '<b class="dest"> '
+				post.title.sub!(/#{dest}/i,b+" &nbsp;#{dest} </b>&nbsp; ")
+				unless(post.title=~/<b>/)
+					findAbrev = / #{dest.scan(/[A-Z]/).join} /i
+					post.title.sub!(findAbrev,b+" &nbsp;#{dest} </b>&nbsp; ")
+				end
+			%>
+			<p id="<%=post.cid %>" class="post">
+				<%= post.title %>
+				<a class="inna" name="<%= post.cid %>" 
+					href="<%=post.link %>">(+)<%# post.cid%></a>
+			<% end%>
 		<%end%>
 		<p style="height:100%"></p>
 
-<script>
-/*
-function getDest(cid){
-	dest = ""
-	$.ajax({	
-	   url:'http://50.18.139.191/d/'+cid,
-	    dataType: "jsonp",
-	    jsonpCallback: "_dest_cb",
-	    cache: false,
-	    timeout: 10000,
-	    success: function(data) {
-			data = eval('('+data+')');
-			dest = data[cid];
-		},
-	    error: function(jqXHR, textStatus, errorThrown) {
-	        alert('error ' + textStatus + " " + errorThrown);
-	    }
-	});
-}
-var origs = "";
-url = "http://maps.googleapis.com/maps/api/staticmap?sensor=false"
-url += "&maptype=roadmap&zoom=11&size=406x256&center="
-for(i = 0 ; i<$(".inna").length; i++){
-	$(".inna")[i].onclick = function(){
-		cid = this.name;
-		$.ajax({
+		<!-- <script>
+		/*
+		function getDest(cid){
+			dest = ""
+			$.ajax({	
+			   url:'http://50.18.139.191/d/'+cid,
+			    dataType: "jsonp",
+			    jsonpCallback: "_dest_cb",
+			    cache: false,
+			    timeout: 10000,
+			    success: function(data) {
+					data = eval('('+data+')');
+					dest = data[cid];
+				},
+			    error: function(jqXHR, textStatus, errorThrown) {
+			        alert('error ' + textStatus + " " + errorThrown);
+			    }
+			});
+		}
+		var origs = "";
+		url = "http://maps.googleapis.com/maps/api/staticmap?sensor=false"
+		url += "&maptype=roadmap&zoom=11&size=406x256&center="
+		for(i = 0 ; i<$(".inna").length; i++){
+			$(".inna")[i].onclick = function(){
+				cid = this.name;
+				$.ajax({
 			
-		   url:'http://50.18.139.191/origp/'+this.name,
-		    dataType: "jsonp",
-		    jsonpCallback: "_orig_cb",
-		    cache: false,
-		    timeout: 10000,
-		    success: function(data) {
-				data = eval('('+data+')');
-				origs = data;
-				parent = $("#"+cid)[0]
-				parent.style.width = "850px"
-				orig = origs[cid]
-				origURL = url.replace("11","13")+orig.replace(/ /g,"%20")
-				dest = parent.children[0].innerText.replace(/  +/,"")
-				destURL = url+dest.replace(/ /g,"%20")
-				parent.innerHTML += "<br><img src="+origURL+"><img src="+destURL+">"
-			},
-		    error: function(jqXHR, textStatus, errorThrown) {
-		        alert('error ' + textStatus + " " + errorThrown);
-		    }
-		});
-		return(false)
-	}
-}
+				   url:'http://50.18.139.191/origp/'+this.name,
+				    dataType: "jsonp",
+				    jsonpCallback: "_orig_cb",
+				    cache: false,
+				    timeout: 10000,
+				    success: function(data) {
+						data = eval('('+data+')');
+						origs = data;
+						parent = $("#"+cid)[0]
+						parent.style.width = "850px"
+						orig = origs[cid]
+						origURL = url.replace("11","13")+orig.replace(/ /g,"%20")
+						dest = parent.children[0].innerText.replace(/  +/,"")
+						destURL = url+dest.replace(/ /g,"%20")
+						parent.innerHTML += "<br><img src="+origURL+">"
+						parent.innerHTML += "<img src="+destURL+">"
+					},
+				    error: function(jqXHR, textStatus, errorThrown) {
+				        alert('error ' + textStatus + " " + errorThrown);
+				    }
+				});
+				return(false)
+			}
+		}
 
-*/
-</script>
+		*/
+		</script> -->
 
 
 

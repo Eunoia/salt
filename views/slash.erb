@@ -1,85 +1,69 @@
-<p style="text-align:center;font-family: airplane;font-size: 400%">
-	Salt is a fresh take on rideshare
-</p>
-<style >
-body{
-	background-image: url('/xv.png');
-}
-</style>
-<script>
-var mode=-1;
-</script>
-	<!--p id="hip" style="float: right; width: 10em; margin-right: 1em; padding-top: 30%">
-		Are you trying to get somewhere?<br>
+	<p style="text-align:center;font-family: airplane;font-size: 400%">
+		Salt is a fresh take on rideshare
+	</p>
+
+	<style>
+		img{ 
+			vertical-align:middle;
+			margin:0 auto;
+			height: 250px;
+			margin-bottom: 1ex;
+			margin-top: auto;
+		}
+		.button {
+			width:300px;
+			height: 300px;
+			display: inline-block;
+			outline: none;
+			cursor: pointer;
+			text-align: center;
+			margin: 0 auto;
+			padding: 1ex;
+			text-decoration: none;
+			background: rgba(255,255,255,255,.3);
+			font: 14px/100% Arial, Helvetica, sans-serif;
+			text-shadow: 0 1px 1px rgba(0,0,0,.3);
+			-webkit-border-radius: .5em; 
+			-moz-border-radius: .5em;
+			border-radius: .5em;
+			-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			box-shadow: 0 1px 2px rgba(0,0,0,.2);
+			border:1px solid black;
+			font-size: 130%;
+			font-family: Liberator;
+		}
+		body{
+			background-image: url('/xv.png');
+		}
+	</style>
+	<script>
+		var mode=-1;
+	</script>
+	<!--p id="hip" style="float: right; width: 10em; margin-right: 1em; padding-top: 30%">Are you trying to get somewhere?<br>
 		<% @to.each do |t|%>
-		<a href=/to/<%= t %>><%= t%></a>
-			<%end%><br>
+			<a href=/to/<%= t %>><%= t%></a>
+		<%end%><br>
 		Trying to get out of town?<br>
-			<% @fresh.each do |t|%>
+		<% @fresh.each do |t|%>
 			<a href=/fresh/<%= t %>><%= t%></a>
-				<%end%>
+		<%end%>
 		<br />
 	</p-->
-<a name="mode" /></a>
-<p style="text-align:center">
-<p class="button">
-<img src="/wanted.svg" id="wanted" onclick="mode = 1"/><br>
-Looking for a Ride?
-</p><p class="button">
-<img src="/offered.svg" onclick="mode = 0"/>
-Looking for Passengers?
-</p><br>
-<p class="button">
-<img src="/crow.svg"  id="crow" onclick="mode = 1"/><br>
-Trying to get home?
-</p><p class="button">
-<img src="/poodle.svg" id="poodle" onclick="mode = 0"/>
-Trying to get out of town?
-</p>
-
-<!--p id="hip" style="height: 400px; padding-top: 30%">
-	Are you trying to get somewhere?
-	<% @to.each do |t|%>
-	<a href=/to/<%= t %>><%= t%></a>
-		<%end%><br>
-	Trying to get out of town?
-		<% @fresh.each do |t|%>
-		<a href=/fresh/<%= t %>><%= t%></a>
-			<%end%>
-	<br />
-</p>
-</p-->
-
-<style>
-img{ 
-	vertical-align:middle;
-	margin:0 auto;
-	height: 250px;
-	margin-bottom: 1ex;
-	margin-top: auto;
-}
-.button {
-	width:300px;
-	height: 300px;
-	display: inline-block;
-	outline: none;
-	cursor: pointer;
-	text-align: center;
-	margin: 0 auto;
-	padding: 1ex;
-	text-decoration: none;
-	background: rgba(255,255,255,255,.3);
-	font: 14px/100% Arial, Helvetica, sans-serif;
-	text-shadow: 0 1px 1px rgba(0,0,0,.3);
-	-webkit-border-radius: .5em; 
-	-moz-border-radius: .5em;
-	border-radius: .5em;
-	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	box-shadow: 0 1px 2px rgba(0,0,0,.2);
-	border:1px solid black;
-	font-size: 130%;
-	font-family: Liberator;
-	
-}
-</style>
+	<a name="mode" /></a>
+	<p style="text-align:center">
+		<p class="button">
+			<img src="/wanted.svg" id="wanted" onclick="mode = 1"/><br>
+			Looking for a Ride?
+		</p><p class="button">
+			<img src="/offered.svg" onclick="mode = 0"/>
+			Looking for Passengers?
+		</p><br>
+		<p class="button">
+			<img src="/crow.svg"  id="crow" onclick="mode = 1"/><br>
+			Trying to get home?
+		</p><p class="button">
+			<img src="/poodle.svg" id="poodle" onclick="mode = 0"/>
+			Trying to get out of town?
+		</p>
+	</p>

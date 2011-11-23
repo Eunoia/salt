@@ -134,7 +134,7 @@ get '/today/?:city?' do
     @name = "SF"
     @bgImg = "sf#{(rand*10%5).round}BG.jpg"
   end
-  @title += " #{@name.upcase}"
+  @title += " #{(@name||"").upcase}"
   erb :tonight
 end
 get '/hello/:name' do

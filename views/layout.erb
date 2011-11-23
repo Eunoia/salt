@@ -2,94 +2,92 @@
 <head>
   <meta charset="utf8">
   <title><%= @title  %></title>
-	<META NAME="Description" CONTENT="A fresh take on craigslist rideshare" />
-	
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
-<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
-<script src="/jquery.scrollTo-1.4.2-min.js"></script>
-<style>
+	<META NAME="Description" CONTENT="A fresh take on craigslist rideshare" />	
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
+	<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+	<script src="/jquery.scrollTo-1.4.2-min.js"></script>
+	<style>
 
-@font-face {
-  font-family: "Governor";
-  src: url("/governor.ttf") format("truetype");
-  }
-@font-face { 
-	font-family: "Airplane";
-	src: url("/Airplane.ttf")  format("truetype");
+	@font-face {
+	  font-family: "Governor";
+	  src: url("/governor.ttf") format("truetype");
+	  }
+	@font-face { 
+		font-family: "Airplane";
+		src: url("/Airplane.ttf")  format("truetype");
+		}
+	@font-face {
+		font-family: "Raleway";
+		src:url('/raleway_thin.ttf') format("truetype");
 	}
-@font-face {
-	font-family: "Raleway";
-	src:url('/raleway_thin.ttf') format("truetype");
-}
-@font-face {
-	font-family: "Liberator";
-	src:url('/Liberator.otf') format("opentype");
-}	
+	@font-face {
+		font-family: "Liberator";
+		src:url('/Liberator.otf') format("opentype");
+	}	
 
-body{ margin:0; height:100%; }
-#topbar li{ 
-//	font-size: 50%;
-	margin-top: 0;
-//	border:1px solid white; 
-	margin-left: .5em;
-	display: inline; list-style-type: none;
-}
-#topbar a:link{
-	color: white;
-}
-//#topbar ul li span{ font-weight:900; }
-#topbar ul{ 
-	padding:0px;
-	background: rgba(0,0,0,0);
-	position:absolute; 
-	right: 4em; 
-	top: -1.3ex;
-	font-size: 100%;
-	margin-left:10em;
-	//border:1px solid white;  
-	display: inline;
-}
-span.who{
-	font-family: Governor;
-	color: white;
-	font-size: 200%;
-}
-#topBar{
-	font-family: sans-serif;
-	border-bottom:1px solid white; 
-	color: #EEE;
-	background: rgba(0,0,0,.75);
-		height:2em;
+	body{ margin:0; height:100%; }
+	#topbar li{ 
+		margin-top: 0;
+		margin-left: .5em;
+		display: inline; list-style-type: none;
 	}
+	#topbar a:link,a:visited{
+		color: white;
+	}
+	#topbar ul li span{ font-weight:900; }
+	#topbar ul{ 
+		padding:0px;
+		background: rgba(0,0,0,0);
+		position:absolute; 
+		right: 4em; 
+		top: -1.3ex;
+		font-size: 100%;
+		margin-left:10em;
+		//border:1px solid white;  
+		display: inline;
+	}
+	span.who a:link{
+		text-decoration: none;
+	}
+	span.who{
+		font-family: Governor;
+		color: white;
+		line-height: 1.2;
+		font-size: 200%;
+	}
+	#topBar{
+		font-family: sans-serif;
+		border-bottom:1px solid white; 
+		color: #EEE;
+		background: rgba(0,0,0,.75);
+			height:2em;
+		}
 
-#footer{
-	width: 100%;
-	color: #EEE;
-	background-color: #292929;
-	margin: 0px;
-//	height: 5em;
-	margin-top:3em;
-	line-height: normal;
-	vertical-align: bottom;
-}
-</style>
-</head>
-<body>
-	<div id="topBar">
-		<span class="who">salt</span>
-		<ul class="topNav">
-			<li>&nbsp;</li>
-			<li id="about"><a href="/to/sfbay">to</a></li>
-			<li id="cities"><a href="/fresh/sfbay">fresh</a></li>
-			<li id="mode"><a href="/today">today</a></li>
-			<li id="you"><a href="#">login</a></li>
-		</ul>
-	</div>
-    <%= yield %>
-	<div id="footer">
-		Footer message
-	</div>
-</body>
-
-
+	#footer{
+		width: 100%;
+		color: #EEE;
+		background-color: #292929;
+		margin: 0px;
+		margin-top:3em;
+		line-height: normal;
+		vertical-align: bottom;
+	}
+	</style>
+	</head>
+	<body>
+		<div id="topBar">
+			<span class="who"><a href="/">megoszt</a></span>
+			<ul class="topNav">
+				<li>&nbsp;</li>
+				<li id="about"><a href="/to/sfbay">to</a></li>
+				<li id="cities"><a href="/fresh/sfbay">fresh</a></li>
+				<li id="mode"><a href="/today">today</a></li>
+				<li id="you"><a href="#">login</a></li>
+			</ul>
+		</div>
+	    <%= yield %>
+		<div id="footer">
+			Footer message
+		</div>
+	</body>
 </html>
