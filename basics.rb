@@ -49,39 +49,7 @@ get '/' do
   @fresh = "sfbay|santabarbara|portland|seattle|losangeles".split("|")
   erb :slash
 end
-get '/to/:dest/?:mode?' do 
-	@places = []
-	if    params[:dest]=~/seattle/i
-		@places +=%w{ Seattle Kirkland Tacoma Everett Redmond }
-		@banner = "Seattle"
-	elsif params[:dest]=~/(pdx|portland)/i
-    @places += %w{ Portland Beaverton Hillsborough}
-    @banner = "PDX"
-	elsif params[:dest]=~/(santabarbara|sb)/i
-	  @places += %w{ Goleta Montecito Carpinteria Ucsb}
-	  @places += ["Santa Barbara", "Isla Vista"]
-	  @banner =  "SB"
-	elsif params[:dest]=~/(la|lax|losangeles)/i
-	  @places += %w{ La Socal Segundo Ucla Hollywood Venice Pasadena}
-	  @places += ["Los Angeles", "Long Beach","Santa Monica","El Segundo"]
-	  @places += ["San Gabriel Valley", "San Fernando Valley",]
-	  @banner = "la"
-  else
-    @places += %w{ Richmond Fremont Berkeley Oakland Sf}
-    @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
-    @banner = "SF"
-  end
-  
-  if(params[:mode]==nil)
-	  @mode=nil
-	  @modeString = "All Posts to"
-	else 
-    @mode = params[:mode]=~/offer/i? 1 : 0
-    @modeString = @mode==1 ? "Find rides to" : "Passengers to"
-  end
-	@title = "Rides to #{@banner}"
-	erb :list
-end
+
 get '/fresh/?:city?' do 
   @title = "Fresh updates from the feeds"
   @city = "sfbay"
@@ -114,7 +82,7 @@ end
 get '/today/?:city?' do
   @title = "Leaving Today |"
   if(params[:city]=~/(pdx|portland)/i)
-    @dbName = "portland"
+    @clName = "portland"
     @name = "pdx"
     @bgImg = "pdx#{(rand*10%5).round}BG.jpg"
   elsif params[:city]=~/l(os)?a(ngeles)?/i
@@ -122,9 +90,9 @@ get '/today/?:city?' do
     @name = "la"
     @bgImg = "laBG.jpg"
   elsif params[:city]=~/s(anta)?b(arbara)?/i
-    @cl = "santabarbara"
+    @clName = "santabarbara"
     @name = "sb"
-    @bgImg = "sb1BG.jpg"
+    @bgImg = "sb#{(rand*10%1).round}BG.jpg"
   elsif params[:city]=~/sea(ttle)?/i
     @clName = "seattle"
     @name = "sea"
@@ -140,8 +108,38 @@ end
 get '/hello/:name' do
 	"Hello, #{params[:name]}"
 end
-get '/more/*' do
-	params[:splat]
+get '/to/?:dest?/?:mode?' do 
+	@places = []
+	if    params[:dest]=~/seattle/i
+		@places +=%w{ Seattle Kirkland Tacoma Everett Redmond }
+		@banner = "seattle"
+	elsif params[:dest]=~/(pdx|portland)/i
+    @places += %w{ Portland Beaverton Hillsborough}
+    @banner = "PDX"
+	elsif params[:dest]=~/(santabarbara|sb)/i
+	  @places += %w{ Goleta Montecito Carpinteria Ucsb}
+	  @places += ["Santa Barbara", "Isla Vista"]
+	  @banner =  "SB"
+	elsif params[:dest]=~/(la|lax|losangeles)/i
+	  @places += %w{ La Socal Segundo Ucla Hollywood Venice Pasadena}
+	  @places += ["Los Angeles", "Long Beach","Santa Monica","El Segundo"]
+	  @places += ["San Gabriel Valley", "San Fernando Valley",]
+	  @banner = "la"
+  else
+    @places += %w{ Richmond Fremont Berkeley Oakland Sf}
+    @places += ["San Francisco","Bay Area","San Jose","Palo Alto"]
+    @banner = "SF"
+  end
+  
+  if(params[:mode]==nil)
+	  @mode=nil
+	  @modeString = "All Posts to"
+	else 
+    @mode = params[:mode]=~/offer/i? 1 : 0
+    @modeString = @mode==1 ? "Find rides to" : "Passengers to"
+  end
+	@title = "Rides to #{@banner}"
+	erb :list
 end
 get '/post/:cid' do
   @post = Posts.find_by_cid(params[:cid].to_i)

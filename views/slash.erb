@@ -39,6 +39,8 @@
 	</style>
 	<script>
 		var mode=-1;
+		var search=-1;
+		var time = -1;
 	</script>
 	<!--p id="hip" style="float: right; width: 10em; margin-right: 1em; padding-top: 30%">Are you trying to get somewhere?<br>
 		<% @to.each do |t|%>
@@ -51,19 +53,27 @@
 		<br />
 	</p-->
 	<a name="mode" /></a>
-	<p style="text-align:center">
+	<center>
 		<p class="button">
 			<img src="/wanted.svg" id="wanted" onclick="mode = 1"/><br>
 			Looking for a Ride?
 		</p><p class="button">
 			<img src="/offered.svg" onclick="mode = 0"/>
 			Looking for Passengers?
-		</p><br>
+		</p>	<a name="time" /></a><br>
+			<p class="button">
+				<img src="/windmill.svg"  id="crow" onclick="time = 1"/><br>
+				Leaving soon?
+			</p><p class="button">
+				<img src="/rocket.svg" id="poodle" onclick="time = 0"/>
+				Leaving now?
+			</p>
+			<a name="do" /></a><br>
 		<p class="button">
-			<img src="/crow.svg"  id="crow" onclick="mode = 1"/><br>
+			<img src="/crow.svg"  id="crow" onclick="search = 1"/><br>
 			Trying to get home?
 		</p><p class="button">
-			<img src="/poodle.svg" id="poodle" onclick="mode = 0"/>
+			<img src="/poodle.svg" id="poodle" onclick="search = 0"/>
 			Trying to get out of town?
 		</p>
-	</p>
+	</center>

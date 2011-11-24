@@ -16,7 +16,6 @@
 			<% end %>
 		}
 		#boxes a:link{
-			color: black;
 			display: block;
 			padding-bottom: .1ex;
 			text-align: center;
@@ -34,14 +33,12 @@
 			font-family: Maagkramp;
 			background-color: #333;
 			-webkit-background-clip: text;
- -moz-background-clip: content;    
 			background-clip: text;
 			color: transparent;
 			text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
 			//color: #CCC;
 			font-size:279px; font-weight: bold;
-			 margin-left: 1%;
-			//font-family: Arial; 
+		 	margin-left: 1%;
 			width: auto;
 			padding:0ex;  }
 		.post{
@@ -87,7 +84,6 @@
 			border-right:0px solid white;
 			width: 20em;
 			margin: 0 auto;
-			
 			display: block;
 		}
 		.post a:visited{
@@ -107,11 +103,15 @@
 		<%if(@name==nil) %>
 			<style>
 			#boxes{
+				color: #F4A;
 				border:1px solid black;
-				background-color: rgba(152,152,152,.2);
+				background-color: rgba(152,152,152,.4);
+			}
+			#boxes a:link{
+				color: #F4A;
 			}
 			</style>
-			<span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium that other sites bring. To get started, just select your city from the box on the right.</span>
+			<span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium of sifting though inapplicable posts. To get started, just select your city from the box on the right.</span>
 		<%
 		else
 			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
