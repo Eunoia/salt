@@ -30,9 +30,14 @@
 		margin-top: 0;
 		margin-left: .5em;
 		display: inline; list-style-type: none;
+		font-size: 80%;
+		font-weight: 800;
+		letter-spacing: 1px;
+		font-family: sans-serif;
 	}
 	#topbar a:link,a:visited{
 		color: white;
+		text-decoration: none;
 	}
 	#topbar ul li span{ font-weight:900; }
 	#topbar ul{ 
@@ -79,10 +84,9 @@
 			<span class="who"><a href="/">megoszt</a></span>
 			<ul class="topNav">
 				<li>&nbsp;</li>
-				<li id="about"><a href="/to/sfbay">to</a></li>
-				<li id="cities"><a href="/fresh/sfbay">fresh</a></li>
-				<li id="mode"><a href="/today">today</a></li>
-				<li id="you"><a href="#">login</a></li>
+				<li id="mode"><a href="/about">ABOUT</a></li>
+				<li id="cities"><a href="/search/sfbay">SEARCH</a></li>
+				<li id="you"><a href="#">LOGIN</a></li>
 			</ul>
 		</div>
 	    <%= yield %>

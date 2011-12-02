@@ -88,13 +88,50 @@ blockquote span {
 	text-transform: uppercase;
 	color: black;
 }
+#searchlegend select{
+	font-size: 100%;
+	background: rgba(255,255,255,.7);
+	-webkit-appearance: listitem;
+	//-webkit-appearance: button;
+	-webkit-border-radius: 2px;
+	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+	-webkit-padding-end: 20px;
+	-webkit-padding-start: 2px;
+	-webkit-background-image: url('/downArrow.svg');
+	background-position: center right;
+	background-repeat: no-repeat;
+	background-size: 7%;
+//	-webkit-user-select: none;
+	border: 1px solid white;
+	background: url('/downArrow.svg') no-repeat center right;
+	border-radius: 15px;
+}
+#searchlegend img{
+	size: 5%;
+	}
+#searchlegend select["selected=selected"]{
+
+}
 </style> 
 
 <blockquote>
 
   <form action="#" onsubmit="return false;" id="searchform" method="get">
     <fieldset id="searchfieldset">
-    <legend id="searchlegend">	<span>Rides from <%=@city%></span>  </legend>
+    <legend id="searchlegend">
+	    
+		<span>Rides from 
+			<select>
+				<% %w[seattle  portland sfBay santaBarbara la].each do |c| %>
+					<!-- <%= c.downcase==@cl %> -->
+					<option name="city"<%= c.downcase==@cl ? ' selected="selected"': ""%>>
+						<%= c.gsub(/[A-Z]/, " \\0").upcase %>
+					</option>
+				<% end %>
+			</select>
+			<!-- <img src="/downArrow.svg" /> -->
+		</span>
+  	</legend>
       <ul>
         <li>
     
@@ -154,24 +191,25 @@ blockquote span {
 <img id="kitten" src="http://placekitten.com/<%=rand(500)+50%>/<%=rand(500)+50%>">
 
 <style>
-//input{ text-shadow: 0px 2px 3px #666; }
+/*//input{ text-shadow: 0px 2px 3px #666; }
+*/
 legend{ 
 	
 	color: #F8CA00;
 	}
 fieldset{ 
-//	background-color: #E97F02;
-	}
+/*	background-color: #E97F02;
+*/	}
 body{ 
-	//background: #F9CDAD;
-//	background-image: url('/patternBG.png');
-
-background-image: url('/diagonal-noise.png'); background-attachment: fixed;
-	}
+	/*	background: #F9CDAD;
+		background-image: url('/patternBG.png');
+	*/
+	background-image: url('/diagonal-noise.png'); background-attachment: fixed;
+}
 
 #cont{ 
 	text-overflow: ellipsis;
-//	background: #FC9D9A;
+/*	background: #FC9D9A;*/
 	width: 640px;
 	margin: 0 auto;
 	padding: 3em;
@@ -209,9 +247,9 @@ b{ margin-right: 2ex; height: 3ex; }
 //	background: rgba(200, 200, 169,.5);
 	background: rgba(174,226,57,.3);
 	margin-bottom: 3em;
-//background-color:rgba(127, 247, 119,.3);
-  border-radius: 20px;
-  }
+	//background-color:rgba(127, 247, 119,.3);
+  	border-radius: 20px;
+ }
 
 img{ 
 	margin:.2em;
@@ -241,6 +279,12 @@ body{
 
 <script>
 //$.getJSON("http://127.0.0.1/wop/2663447361:2666643549?callback=?",
+document.getElementsByTagName("select")[0].onchange = function() { 
+	var newURL = window.location.href.match(/^ht.+\//)
+	var newCity = this.options[this.selectedIndex].innerText.replace(/\s+/g, "");
+	window.location.href = newURL+newCity.toLowerCase();
+}
+
 
 var items = [];
 var cids = [];
@@ -321,7 +365,7 @@ document.getElementById("kitten").onload = function() {
 	    }
 	});
 	$.ajax({
-        url: 'http://50.18.139.191/d/'+cids.join(":"),
+        url: 'http://50.18.139.191/destp/'+cids.join(":"),
         dataType: "jsonp",
         jsonpCallback: "_dest_cb",
         cache: false,
@@ -368,7 +412,7 @@ document.getElementById("kitten").onload = function() {
 					if(place.match(/mt\W/i)){
 						url = url.replace('11','9')
 					}
-					if(place=="Mexico"){
+					if(place.match(/Mexico/i)){
 						url = url.replace('11','6')
 					}
 					if(place=="california"){
@@ -412,6 +456,9 @@ document.getElementById("kitten").onload = function() {
 					if(place=="East"){
 						place = "East Point, GA"
 						url = url.replace('11','15')
+					}
+					if(place.match(/orange/i)){
+						place += " California"
 					}
 					if(place=="America"){
 						url = url.replace('11','3')

@@ -43,70 +43,11 @@ end
 i = 0 
 
 
-get '/' do 
+get '/about' do 
   @title = "Craigslist Rideshare enhancement suite"
   @to = [:seattle,:sb,:la,:sf,:pdx]
   @fresh = "sfbay|santabarbara|portland|seattle|losangeles".split("|")
-  erb :slash
-end
-
-get '/fresh/?:city?' do 
-  @title = "Fresh updates from the feeds"
-  @city = "sfbay"
-  if params[:city]!=nil
-    #(sfbay|pdx|santabarbara|portland|seattle|losangeles)
-    if(params[:city]=~/(pdx|portland)/i)
-      @cl = "portland"
-      @city = "Portland"
-      @banner = "PDX.png"
-    elsif params[:city]=~/l(os)?a(ngeles)?/i
-      @city = "Los Angeles"
-      @cl = "la"
-      @banner = "la.png"
-    elsif params[:city]=~/s(anta)?b(arbara)?/i
-      @cl = "santabarbara"
-      @city = "Santa Barbara"
-      @banner = "SB.png"
-    elsif params[:city]=~/sea(ttle)?/i
-      @cl = "seattle"
-      @city = "Seattle"
-      @banner = "seattle.png"
-    else #if params[:city]=~/sf(bay)?/i
-      @cl = "sfbay"
-      @city = "The bay area"
-      @banner = "SF.png"
-    end
-  end
-  erb :fresh
-end
-get '/today/?:city?' do
-  @title = "Leaving Today |"
-  if(params[:city]=~/(pdx|portland)/i)
-    @clName = "portland"
-    @name = "pdx"
-    @bgImg = "pdx#{(rand*10%5).round}BG.jpg"
-  elsif params[:city]=~/l(os)?a(ngeles)?/i
-    @clName = "losangeles"
-    @name = "la"
-    @bgImg = "laBG.jpg"
-  elsif params[:city]=~/s(anta)?b(arbara)?/i
-    @clName = "santabarbara"
-    @name = "sb"
-    @bgImg = "sb#{(rand*10%1).round}BG.jpg"
-  elsif params[:city]=~/sea(ttle)?/i
-    @clName = "seattle"
-    @name = "sea"
-    @bgImg = "seattle#{(rand*10%1).round}BG.jpg"
-  elsif params[:city]=~/sf(bay)?/i
-    @clName = "sfbay"
-    @name = "SF"
-    @bgImg = "sf#{(rand*10%5).round}BG.jpg"
-  end
-  @title += " #{(@name||"").upcase}"
-  erb :tonight
-end
-get '/hello/:name' do
-	"Hello, #{params[:name]}"
+  erb :about
 end
 get '/to/?:dest?/?:mode?' do 
 	@places = []
@@ -141,6 +82,63 @@ get '/to/?:dest?/?:mode?' do
 	@title = "Rides to #{@banner}"
 	erb :list
 end
+
+get '/search/?:city?' do 
+  @title = "Megoszt | Search"
+  @city = "sfbay"
+  if params[:city]!=nil
+    #(sfbay|pdx|santabarbara|portland|seattle|losangeles)
+    if(params[:city]=~/(pdx|portland)/i)
+      @cl = "portland"
+      @city = "Portland"
+      @banner = "PDX.png"
+    elsif params[:city]=~/l(os)?a(ngeles)?/i
+      @city = "Los Angeles"
+      @cl = "la"
+      @banner = "la.png"
+    elsif params[:city]=~/s(anta)?b(arbara)?/i
+      @cl = "santabarbara"
+      @city = "Santa Barbara"
+      @banner = "SB.png"
+    elsif params[:city]=~/sea(ttle)?/i
+      @cl = "seattle"
+      @city = "Seattle"
+      @banner = "seattle.png"
+    else #if params[:city]=~/sf(bay)?/i
+      @cl = "sfbay"
+      @city = "The bay area"
+      @banner = "SF.png"
+    end
+  end
+  erb :search
+end
+get '/:city?' do
+  @title = "Leaving Today |"
+  if(params[:city]=~/(pdx|portland)/i)
+    @clName = "portland"
+    @name = "pdx"
+    @bgImg = "pdx#{(rand*10%5).round}BG.jpg"
+  elsif params[:city]=~/l(os)?a(ngeles)?/i
+    @clName = "losangeles"
+    @name = "la"
+    @bgImg = "laBG.jpg"
+  elsif params[:city]=~/s(anta)?b(arbara)?/i
+    @clName = "santabarbara"
+    @name = "sb"
+    @bgImg = "sb#{(rand*10%1).round}BG.jpg"
+  elsif params[:city]=~/sea(ttle)?/i
+    @clName = "seattle"
+    @name = "sea"
+    @bgImg = "seattle#{(rand*10%1).round}BG.jpg"
+  elsif params[:city]=~/sf(bay)?/i
+    @clName = "sfbay"
+    @name = "SF"
+    @bgImg = "sf#{(rand*10%5).round}BG.jpg"
+  end
+  @title += " #{(@name||"").upcase}"
+  erb :today
+end
+
 get '/post/:cid' do
   @post = Posts.find_by_cid(params[:cid].to_i)
   @result = Results.find_by_cid(params[:cid].to_i)
@@ -152,7 +150,7 @@ get '/post/:cid' do
 	erb :aPost
 end
 get '/about' do
-	"A little about me";
+	erb :about
 end
 not_found do
   @title = "Tyoko"

@@ -92,14 +92,25 @@
 			color: rgba(255,255,255,.1);
 			
 		}
+		.content{
+			border:1px solid white;
+			display: none;
+		}
+		.content_v{
+			clear: both;
+			float: right;
+			color: #333;
+			display: inline;
+			padding: 1em;
+		}
 		div#footer{ display:none; }
 		</style>
 		<div id="boxes">
-			<a href="/today/seattle">Seattle</a><br />
-			<a href="/today/pdx">PDX</a><br />
-			<a href="/today/sf">SF</a><br />
-			<a href="/today/sb">SB</a><br />
-			<a href="/today/la">LA</a><br />
+			<a href="/seattle">Seattle</a><br />
+			<a href="/pdx">PDX</a><br />
+			<a href="/sf">SF</a><br />
+			<a href="/sb">SB</a><br />
+			<a href="/la">LA</a><br />
 		</div>
 		<span id="title">[<%=@name%>]</span>
 		<%if(@name==nil) %>
@@ -113,7 +124,7 @@
 				color: black;
 			}
 			</style>
-			<span class="explanation"><span class="who" style="color: black; font-size:120%">today</span> shows you all the rides and passages leaving from your city, without the tedium of sifting though inapplicable posts. To get started, just select your city from the box on the right.</span>
+			<span class="explanation"><span class="who" style="color: black; font-size:120%">megoszt</span> shows you all the rides and passages leaving from your city, without the tedium of sifting though inapplicable posts. To get started, just select your city from the box on the right.</span>
 		<%
 		else
 			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
@@ -133,13 +144,27 @@
 			%>
 			<p id="<%=post.cid %>" class="post">
 				<%= post.title %>
+
 				<a class="inna" name="<%= post.cid %>" 
-					href="<%=post.link %>">(+)<%# post.cid%></a>
+					href="#"
+					hash="<%=post.link %>">(+)<%# post.cid%></a>
+					<span class="content">
+						<%= post.content %>
+					</span>
 			<% end%>
 		<%end%>
 		<p style="height:100%"></p>
-
-		<!-- <script>
+		<script>
+			 innas = $("a.inna");
+			 for(i=0;i<innas.length;i++){
+				innas[i].onclick  = function() {
+					this.parentElement.children[1].className = 'content_v';
+					this.innerHTML = "(--)"
+					return false;
+			 	}
+			 }
+		</script>
+		<!-- script>
 		/*
 		function getDest(cid){
 			dest = ""
@@ -192,9 +217,5 @@
 		}
 
 		*/
-		</script> -->
-
-
-
-
-
+		</script>
+		 -->
