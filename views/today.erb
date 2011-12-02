@@ -15,7 +15,7 @@
 			
 			<% end %>
 		}
-		#boxes a:link{
+		#boxes a:link,a:visited{
 			display: block;
 			color: black;
 			font-weight: 800px;
@@ -30,7 +30,7 @@
 			border:1px solid white;
 			padding:2em 2em 1em 2em; 
 			display: block; border-radius: 10px; 
-			width: 9em; background: rgba(255,255,255,.4) }
+			width: 9em; background: rgba(255,255,255,.6) }
 		#title{
 			font-family: Maagkramp;
 			background-color: #333;
@@ -55,6 +55,8 @@
 			padding: .5ex .5ex .5ex 2ex;
 			color: black;
 			background-color: rgba(255,255,255,.6);
+			box-shadow: 7px 7px rgba(0,0,0,0.5);
+			
 		}
 		.post b{ 
 			margin: auto 0;
@@ -104,6 +106,21 @@
 			padding: 1em;
 		}
 		div#footer{ display:none; }
+		
+		#cont{
+			padding-top:2em;
+			padding-bottom: 2em;
+			margin:1em;
+			background:rgba(255,255,255,.4);
+			border-radius: 100px;
+		}
+
+		.post{
+			margin:auto auto
+			margin-top:1em;
+			
+		}
+
 		</style>
 		<div id="boxes">
 			<a href="/seattle">Seattle</a><br />
@@ -128,10 +145,11 @@
 		<%
 		else
 			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
+			#today = (Time.parse(Time.new.strftime("11/25/%Y"))).to_i
 			results = Results.find(:all, :conditions => " leaving=#{today}")
-			puts __LINE__
 			posts = Posts.find(results.map{|r| r.cid })
 			posts = posts.select{ |p| p.city==@clName }
+			%><div id="cont"><%
 			posts.each do |post|
 				dest = Results.find(post.cid).dest
 				next if dest==""
@@ -142,23 +160,26 @@
 					post.title.sub!(findAbrev,b+" &nbsp;#{dest} </b>&nbsp; ")
 				end
 			%>
-			<p id="<%=post.cid %>" class="post">
-				<%= post.title %>
+				<p id="<%=post.cid %>" class="post">
+					<%= post.title %>
 
-				<a class="inna" name="<%= post.cid %>" 
-					href="#"
-					hash="<%=post.link %>">(+)<%# post.cid%></a>
-					<span class="content">
-						<%= post.content %>
-					</span>
-			<% end%>
-		<%end%>
+					<a class="inna" name="<%= post.cid %>" 
+						href="#"
+						hash="<%=post.link %>">(+)<%# post.cid%></a>
+						<span name="content" class="content">
+							<%= post.content %>
+							<a href="<%= post.link %>"><%= post.cid %></a>
+						</span>
+				<% end%>
+			<%end%>
+		</div>
 		<p style="height:100%"></p>
 		<script>
 			 innas = $("a.inna");
 			 for(i=0;i<innas.length;i++){
 				innas[i].onclick  = function() {
-					this.parentElement.children[1].className = 'content_v';
+					this.parentElement.children[2].className = 'content_v';
+					console.log(this.parentElement.children[2])
 					this.innerHTML = "(--)"
 					return false;
 			 	}

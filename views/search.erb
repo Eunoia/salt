@@ -31,11 +31,13 @@
 	 border:1px solid black; 
 	}
 #searchform ul{
-	 display: block; width:100%;  margin: 0px 0px; list-style: none none;
+
+	display: block; width:100%;  margin: 0px 0px; list-style: none none;
 	}
 #searchform li{
 	 border:0px solid black; display: block; float: left;
 	 height: 80px;width: 25%; margin-bottom: 1ex; 
+	
 }
 input[type="submit"]{ 
 	display: block; margin: auto; margin-top: 1em; 
@@ -220,7 +222,7 @@ body{
 div.post { 
 	padding-left:2em;
 	padding-bottom:.1ex;
-	margin-bottom:1ex; 
+	margin-bottom:2ex; 
 /*	#ECE8E3; is the backgorund color */
 	border: 1px solid black;
 	 }
@@ -240,7 +242,10 @@ b{ margin-right: 2ex; height: 3ex; }
 	background: rgba(252,157,154,.3);
 //opacity: .5;
   }
-
+.shadow{
+	box-shadow: 5px 5px rgba(0,0,0,0.5);
+	
+}
 .Offered{ 
 	background-color: #C6FFC3; 
 //	background-color: #C8C8A9;
@@ -249,6 +254,7 @@ b{ margin-right: 2ex; height: 3ex; }
 	margin-bottom: 3em;
 	//background-color:rgba(127, 247, 119,.3);
   	border-radius: 20px;
+
  }
 
 img{ 
@@ -275,6 +281,7 @@ div.post b{
 body{
 
 }
+
 </style>
 
 <script>
@@ -499,9 +506,11 @@ document.getElementById("kitten").onload = function() {
 $("#offeredRadio")[0].onclick = function() {
 	$(".wanted").fadeOut();
 	$(".offered").fadeIn();
+//	$(".offered").map(function(){ this.className += " shadow"})
 }
 $("#wantedRadio")[0].onclick = function(){
 	$(".wanted").fadeIn();
+//	$(".wanted").map(function(){ this.className += " shadow"})
 	$(".offered").fadeOut();
 }
 $("#bothRadio")[0].onclick = function(){

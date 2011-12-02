@@ -34,8 +34,16 @@
 		font-weight: 800;
 		letter-spacing: 1px;
 		font-family: sans-serif;
+		border-left:1px solid white;
+		padding-left:.3ex;
+		padding-bottom:1em;
+	
 	}
-	#topbar a:link,a:visited{
+	#topbar li:first-child{
+		border-left-width:0px;
+		
+	}
+	#topbar a:link ,#topbar a:visited {
 		color: white;
 		text-decoration: none;
 	}
@@ -84,16 +92,16 @@
 			<span class="who"><a href="/">megoszt</a></span>
 			<ul class="topNav">
 				<li>&nbsp;</li>
-				<li id="mode"><a href="/about">ABOUT</a></li>
-				<li id="cities"><a href="/search/sfbay">SEARCH</a></li>
-				<li id="you"><a href="#">LOGIN</a></li>
+				<li id="about"><a href="/about">ABOUT</a></li>
+				<li id="search"><a href="/search/sfbay">SEARCH</a></li>
+				<li id="login"><a href="#">LOGIN</a></li>
 			</ul>
 		</div>
 	    <%= yield %>
 		<div id="footer">
-			<p>
-				Check out the API: http://50.18.139.191/
-			</p>
+			<p><br />
+				This is the footer.
+			</p><br />
 		</div>
 	</body>
 </html>
