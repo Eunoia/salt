@@ -1,7 +1,4 @@
 <script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
-
-
-
 <style>
 .ui-menu-item{
 	background-color: #FFF;
@@ -49,7 +46,6 @@ fieldset input[type="text"]{
 	border-radius: 5px;  
 	border-bottom-left-radius: 0px;
 	border-bottom-right-radius: 0px;
-	
 	width: 150px; color: gray; }
 input[type="radio"]{
 	 margin-left: 2em; margin-top:.5ex;}
@@ -94,7 +90,6 @@ blockquote span {
 	font-size: 100%;
 	background: rgba(255,255,255,.7);
 	-webkit-appearance: listitem;
-	//-webkit-appearance: button;
 	-webkit-border-radius: 2px;
 	-webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
 	-webkit-padding-end: 20px;
@@ -103,7 +98,6 @@ blockquote span {
 	background-position: center right;
 	background-repeat: no-repeat;
 	background-size: 7%;
-//	-webkit-user-select: none;
 	border: 1px solid white;
 	background: url('/downArrow.svg') no-repeat center right;
 	border-radius: 15px;
@@ -190,32 +184,21 @@ blockquote span {
 <p id="cont">
 	&nbsp;
 </p>
-<img id="kitten" src="http://placekitten.com/<%=rand(500)+50%>/<%=rand(500)+50%>">
+<!-- <img id="kitten" src="http://placekitten.com/<%=rand(500)+50%>/<%=rand(500)+50%>"> -->
+<img id="kitten" src="/poodle.svg">
 
 <style>
-/*//input{ text-shadow: 0px 2px 3px #666; }
-*/
-legend{ 
-	
-	color: #F8CA00;
-	}
-fieldset{ 
-/*	background-color: #E97F02;
-*/	}
-body{ 
-	/*	background: #F9CDAD;
-		background-image: url('/patternBG.png');
-	*/
+legend{ color: #F8CA00; }
+fieldset{  }
+body{
 	background-image: url('/diagonal-noise.png'); background-attachment: fixed;
 }
 
 #cont{ 
 	text-overflow: ellipsis;
-/*	background: #FC9D9A;*/
 	width: 640px;
 	margin: 0 auto;
-	padding: 3em;
-	 }
+	padding: 3em; }
 .tate img{ 
 	-webkit-transform: rotate(90deg);
 	}
@@ -229,34 +212,17 @@ div.post {
 div > p { width: 80%; }
 small{ font-size: 40%; }
 b{ margin-right: 2ex; height: 3ex; }
-/* Nice colors
-.Wanted{ background-color: #7ff777;}
-.Offered{ background-color: #ff6E74; }
-*/
-
 .Wanted{ 
-//	background-color: #FFD1D3;
-//	background-color: #FC9D9A;
-  border-radius: 20px;
+	border-radius: 20px;
 	margin-bottom: 1em;
-	background: rgba(252,157,154,.3);
-//opacity: .5;
-  }
+	background: rgba(252,157,154,.3); }
 .shadow{
-	box-shadow: 5px 5px rgba(0,0,0,0.5);
-	
-}
+	box-shadow: 5px 5px rgba(0,0,0,0.5); }
 .Offered{ 
 	background-color: #C6FFC3; 
-//	background-color: #C8C8A9;
-//	background: rgba(200, 200, 169,.5);
 	background: rgba(174,226,57,.3);
 	margin-bottom: 3em;
-	//background-color:rgba(127, 247, 119,.3);
-  	border-radius: 20px;
-
- }
-
+  	border-radius: 20px;}
 img{ 
 	margin:.2em;
 	border-radius:14px;
@@ -270,7 +236,6 @@ div.post b{
 	display: block;
 	padding:0;
 	text-overflow: ellipsis;
-//	width: 99%;
 	margin: 0;
 	//width: 300px;
 	}
@@ -295,6 +260,7 @@ document.getElementsByTagName("select")[0].onchange = function() {
 
 var items = [];
 var cids = [];
+var leaving = [];
 var fetched = ""
 //origs = "";
 pants = "";
@@ -322,13 +288,15 @@ document.getElementById("resetForm").onclick = function(){
 document.getElementById("kitten").onload = function() { 
 	items = posts["rdf:RDF"].item;
 	for(i = 0; i<items.length; i++){
-//	for(i = 0; i<10; i++){
 		cid = items[i].link.match(/\d+/)[0];
 		title = items[i].title
 		cids.push(cid);
 		link = items[i].link
-		document.getElementById("cont").innerHTML+= 
-			"<div class=post id=\""+cid+"\"><small><a href="+link+">"+cid+ "</a><br></small><b>"+title+"</b></div>";
+		document.getElementById("cont").innerHTML +=( 
+			"<div class=\"post\" id=\""+cid+"\">" +
+				"<small><a href="+link+">"+cid+ "</a><br></small>"+
+				"<b>"+title+"</b>"+
+			"</div>");
 	}
 	$.ajax({
         url: 'http://50.18.139.191/wop/'+cids.join(":"),
@@ -356,7 +324,20 @@ document.getElementById("kitten").onload = function() {
             alert('error ' + textStatus + " " + errorThrown);
         }
     });
-
+	// $.ajax({
+	//     url:'http://50.18.139.191/leavingp/'+cids.join(":"),
+	//     dataType: "jsonp",
+	//     jsonpCallback: "_leaving_cb",
+	//     cache: false,
+	//     timeout: 10000,
+	//     success: function(data) {
+	// 		data = eval('('+data+')');
+	// 		leaving = data;
+	// 	},
+	//     error: function(jqXHR, textStatus, errorThrown) {
+	//         alert('error ' + textStatus + " " + errorThrown);
+	//     }
+	// });
 	$.ajax({
 	    url:'http://50.18.139.191/origp/'+cids.join(":"),
 	    dataType: "jsonp",
@@ -402,7 +383,9 @@ document.getElementById("kitten").onload = function() {
 			for(var i in data) {	
 				var url = "http://maps.googleapis.com/maps/api/"
 				url += "staticmap?sensor=false&maptype=roadmap"
-				url += "&zoom=11&size=512x128&center="
+				url += "&zoom=11&size=512x128"
+				url+="&style=feature:road.local|element:geometry|visibility:off&style=feature:road.highway|element:labels|visibility:simplified&style=feature:landscape.man_made|visibility:off&style=feature:poi|visibility:off&style=feature:poi.school|visibility:on&style=feature:poi.park|visibility:on&style=feature:road.local|visibility:on|lightness:48&style=feature:poi.park|element:labels|visibility:off&style=feature:road.arterial|element:labels|visibility:off"
+				url += "&center="
 				elem = document.getElementById(i+"")
 				if(elem!=null) {		
 					var place = data[i];

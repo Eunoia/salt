@@ -5,15 +5,14 @@
 		}
 		body{
 			margin:0;
-			<% if(@bgImg!=nil)%>
+		<% if(@bgImg!=nil)%>
 			background-image: url('/<%=@bgImg%>');
 			background-repeat: no-repeat;
 			background-size: cover;
 			background-attachment: fixed;
-			<% else %>
+		<% else %>
 			background-image: url('/xv.png');
-			
-			<% end %>
+		<% end %>
 		}
 		#boxes a:link,a:visited{
 			display: block;
@@ -21,8 +20,7 @@
 			font-weight: 800px;
 			padding-bottom: .1ex;
 			text-align: center;
-			font-size: 120%;
-		}
+			font-size: 120%; }
 		#boxes{
 			font-family: Raleway;
 			font-weight: 700;
@@ -38,7 +36,6 @@
 			background-clip: text;
 			color: transparent;
 			text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
-			//color: #CCC;
 			font-size:279px; font-weight: bold;
 		 	margin-left: 1%;
 			width: auto;
@@ -55,9 +52,10 @@
 			padding: .5ex .5ex .5ex 2ex;
 			color: black;
 			background-color: rgba(255,255,255,.6);
-			box-shadow: 7px 7px rgba(0,0,0,0.5);
-			
-		}
+			box-shadow: 7px 7px rgba(0,0,0,0.5); 
+			margin:auto auto;
+			margin-top:1em;
+			margin-bottom: 1em; }
 		.post b{ 
 			margin: auto 0;
 			font-size: 120%; text-transform: uppercase;
@@ -69,14 +67,11 @@
 			color: #FFF;
 			float: right;
 			display: block;
-			//width: 1em;
 			padding:.1ex .1ex .1ex .1ex;
-			//border:1px solid white;
 			text-align: top;
 			border-radius: 3px;
 			background: rgba(0,0,0,.5);
-			text-overflow: ellipsis;
-		}
+			text-overflow: ellipsis; }
 		.explanation{
 			border:1px solid black;
 			padding-left:2em;
@@ -88,39 +83,27 @@
 			border-right:0px solid white;
 			width: 20em;
 			margin: 0 auto;
-			display: block;
-		}
+			display: block;	}
 		.post a:visited{
-			color: rgba(255,255,255,.1);
-			
-		}
+			color: rgba(255,255,255,.1); }
 		.content{
 			border:1px solid white;
-			display: none;
-		}
+			display: none; }
 		.content_v{
 			clear: both;
 			float: right;
 			color: #333;
 			display: inline;
-			padding: 1em;
-		}
-		div#footer{ display:none; }
-		
+			padding: 1em; }
+		/*div#footer{ display:none; }*/
 		#cont{
 			padding-top:2em;
 			padding-bottom: 2em;
 			margin:1em;
 			background:rgba(255,255,255,.4);
-			border-radius: 100px;
-		}
-
-		.post{
-			margin:auto auto
-			margin-top:1em;
-			
-		}
-
+			border-radius: 100px; 	}
+		#title:first-letter {  }
+		#last {  }
 		</style>
 		<div id="boxes">
 			<a href="/seattle">Seattle</a><br />
@@ -129,7 +112,7 @@
 			<a href="/sb">SB</a><br />
 			<a href="/la">LA</a><br />
 		</div>
-		<span id="title">[<%=@name%>]</span>
+	<div id="title">&lt;<%=@name%><span id="last">&gt;</span></div>
 		<%if(@name==nil) %>
 			<style>
 			#boxes{
@@ -141,7 +124,7 @@
 				color: black;
 			}
 			</style>
-			<span class="explanation"><span class="who" style="color: black; font-size:120%">megoszt</span> shows you all the rides and passages leaving from your city, without the tedium of sifting though inapplicable posts. To get started, just select your city from the box on the right.</span>
+			<span class="explanation"><span class="who" style="color: black; font-size:120%">megoszt</span> shows you all rides leaving today, without the tedium of sifting though inapplicable posts. To get started, select your city from the box on the right.</span>
 		<%
 		else
 			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
