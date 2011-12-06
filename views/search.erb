@@ -415,6 +415,9 @@ document.getElementById("kitten").onload = function() {
 					if(place=="Montana"){
 						url = url.replace('11','7')
 					}
+					if(place.match(/Christmas/i)){
+						place = place.replace(/ Christmas /i, "")
+					}
 					if(place=="Norcal"){
 						url = url.replace('11','5');
 						place = "Chico"
