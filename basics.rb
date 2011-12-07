@@ -117,7 +117,7 @@ get '/:city?' do
   if(params[:city]=~/(pdx|portland)/i)
     @clName = "portland"
     @name = "pdx"
-    @bgImg = "pdx#{(rand*10%5).round}BG.jpg"
+    @bgImg = "pdx#{rand(2)}BG.jpg"
   elsif params[:city]=~/l(os)?a(ngeles)?/i
     @clName = "losangeles"
     @name = "la"
@@ -133,7 +133,7 @@ get '/:city?' do
   elsif params[:city]=~/sf(bay)?/i
     @clName = "sfbay"
     @name = "SF"
-    @bgImg = "sf#{(rand*10%5).round}BG.jpg"
+    @bgImg = "sf#{rand(4)}BG.jpg"
   end
   @title += " #{(@name||"").upcase}"
   erb :today

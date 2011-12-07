@@ -28,7 +28,7 @@
 			border:1px solid white;
 			padding:2em 2em 1em 2em; 
 			display: block; border-radius: 10px; 
-			width: 9em; background: rgba(255,255,255,.6) }
+			width: 9em; background: rgba(255,255,255,.7) }
 		#title{
 			font-family: Maagkramp;
 			background-color: #333;
@@ -70,8 +70,11 @@
 			padding:.1ex .1ex .1ex .1ex;
 			text-align: top;
 			border-radius: 3px;
-			background: rgba(0,0,0,.5);
 			text-overflow: ellipsis; }
+		.post a:link:last-child{
+			margin-top:.4em;
+			background: rgba(0,0,0,.5);
+		}
 		.explanation{
 			border:1px solid black;
 			padding-left:2em;
@@ -100,10 +103,13 @@
 			padding-top:2em;
 			padding-bottom: 2em;
 			margin:1em;
-			background:rgba(255,255,255,.4);
+			background:rgba(255,255,255,.6);
 			border-radius: 100px; 	}
 		#title:first-letter {  }
 		#last {  }
+		.post a img{
+			height: 1em;
+		}
 		</style>
 		<div id="boxes">
 			<a href="/seattle">Seattle</a><br />
@@ -144,26 +150,27 @@
 				end
 			%>
 				<p id="<%=post.cid %>" class="post">
-					<%= post.title %>
-
-					<a class="inna" name="<%= post.cid %>" 
-						href="#"
-						hash="<%=post.link %>">(+)<%# post.cid%></a>
-						<span name="content" class="content">
-							<%= post.content %>
-							<a href="<%= post.link %>"><%= post.cid %></a>
-						</span>
+					<a name="<%= post.cid %>" 
+						href="<%=post.link %>">
+							<img src="/uprightarrow.svg">
+					</a>
+					<span class="inna"><%= post.title %></span>
+					<span name="content" class="content">
+						<%= post.content %>
+						<a href="<%= post.link %>"><%= post.cid %></a>
+					</span>
+				</p>
 				<% end%>
 			<%end%>
 		</div>
 		<p style="height:100%"></p>
 		<script>
-			 innas = $("a.inna");
+			 innas = $("span.inna");
 			 for(i=0;i<innas.length;i++){
 				innas[i].onclick  = function() {
 					this.parentElement.children[2].className = 'content_v';
 					console.log(this.parentElement.children[2])
-					this.innerHTML = "(--)"
+					//this.innerHTML = "(--)"
 					return false;
 			 	}
 			 }
