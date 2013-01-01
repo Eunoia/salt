@@ -1,5 +1,10 @@
-<script src="http://www.blastcasta.com/feed-to-json.aspx?feedurl=http://<%=@cl%>.craigslist.org/rid/index.rss&param=posts" ></script>
 <style>
+fieldset{  }
+body{
+	background-image: url('/diagonal-noise.png'); 
+	background-attachment: fixed;
+}
+
 .ui-menu-item{
 	background-color: #FFF;
 	border: 1px solid black;
@@ -109,7 +114,7 @@ blockquote span {
 
 }
 </style> 
-
+<script src="/jquery-ui-1.8.17.custom.min.js"></script>
 <blockquote>
 
   <form action="#" onsubmit="return false;" id="searchform" method="get">
@@ -125,7 +130,6 @@ blockquote span {
 					</option>
 				<% end %>
 			</select>
-			<!-- <img src="/downArrow.svg" /> -->
 		</span>
   	</legend>
       <ul>
@@ -143,7 +147,7 @@ blockquote span {
             <input type=radio disabled=disabled name="srchType" >
 					Entire Post
           </label> <br>
-	      <input id="find" type="text" disabled=disabled value="Search...."></input><br>
+	      <input id="find" type="text" value="Search...."></input><br>
 
         </li>
         <li>
@@ -181,6 +185,7 @@ blockquote span {
 		     </fieldset>
   </form>
 </blockquote>
+<p id="updates">&nbsp;</p>
 <p id="cont">
 	&nbsp;
 </p>
@@ -188,11 +193,7 @@ blockquote span {
 <img id="kitten" src="/poodle.svg">
 
 <style>
-legend{ color: #F8CA00; }
-fieldset{  }
-body{
-	background-image: url('/diagonal-noise.png'); background-attachment: fixed;
-}
+
 
 #cont{ 
 	text-overflow: ellipsis;
@@ -237,7 +238,6 @@ div.post b{
 	padding:0;
 	text-overflow: ellipsis;
 	margin: 0;
-	//width: 300px;
 	}
 }
 div.post b{
@@ -250,11 +250,10 @@ body{
 </style>
 
 <script>
-//$.getJSON("http://127.0.0.1/wop/2663447361:2666643549?callback=?",
 document.getElementsByTagName("select")[0].onchange = function() { 
 	var newURL = window.location.href.match(/^ht.+\//)
-	var newCity = this.options[this.selectedIndex].innerText.replace(/\s+/g, "");
-	window.location.href = newURL+newCity.toLowerCase();
+	var newCity = this.options[this.selectedIndex].innerText;
+	window.location.href = newURL+newCity.replace(/\s+/g, "").toLowerCase();
 }
 
 
@@ -298,13 +297,15 @@ document.getElementById("kitten").onload = function() {
 				"<b>"+title+"</b>"+
 			"</div>");
 	}
+	console.log("fetching wop")
 	$.ajax({
-        url: 'http://50.18.139.191/wop/'+cids.join(":"),
+        url: 'http://127.0.0.1:8080/wop/'+cids.join(":"),
         dataType: "jsonp",
         jsonpCallback: "_wo_cb",
         cache: false,
         timeout: 10000,
         success: function(data) {
+			console.log("finshed wop")
 			wo = data;
 			data = eval('('+data+')');
 			for(var i in data) {	
@@ -321,6 +322,7 @@ document.getElementById("kitten").onload = function() {
             $("#test").append(data)
         },
         error: function(jqXHR, textStatus, errorThrown) {
+			$("updates").innerHTML += "finshed wop"
             alert('error ' + textStatus + " " + errorThrown);
         }
     });
@@ -339,7 +341,7 @@ document.getElementById("kitten").onload = function() {
 	//     }
 	// });
 	$.ajax({
-	    url:'http://50.18.139.191/origp/'+cids.join(":"),
+	    url:'http://127.0.0.1:8080/origp/'+cids.join(":"),
 	    dataType: "jsonp",
 	    jsonpCallback: "_orig_cb",
 	    cache: false,
@@ -353,7 +355,7 @@ document.getElementById("kitten").onload = function() {
 	    }
 	});
 	$.ajax({
-        url: 'http://50.18.139.191/destp/'+cids.join(":"),
+        url: 'http://127.0.0.1:8080/destp/'+cids.join(":"),
         dataType: "jsonp",
         jsonpCallback: "_dest_cb",
         cache: false,
@@ -369,13 +371,16 @@ document.getElementById("kitten").onload = function() {
 			//	options: {width: 7em},
 				select: function(event,ui){ 
 					console.log(ui.item)
-					ids = []
-					for(i in dests){
-						if(ui.item.value!=dests[i]){ ids.push(i)} 
-					}
-
-					for(i in ids){
-						$("#"+ids[i]).fadeOut()
+					for(cid in dests){
+						elem = $("#"+cid)
+						if(ui.item.value==dests[cid]){
+						//if(v==dests[cid]){
+							if(elem.is(":hidden")){
+								elem.fadeIn();
+							}
+						}else{
+							elem.fadeOut();
+						}	
 					}
 				}
 			});
@@ -406,7 +411,7 @@ document.getElementById("kitten").onload = function() {
 						url = url.replace('11','6')
 					}
 					if(place=="california"){
-						url = url.replace('11','5')
+						//url = url.replace('11','5')
 					}
 					if((place+" ").match(/cali\W/i)!=null){
 						place = place.replace(/ cali/i, " California")
@@ -457,10 +462,8 @@ document.getElementById("kitten").onload = function() {
 						url = url.replace('11','3')
 					}
 					if(place=="East Coast"){
-				//		url = url.replace('512x128','128x512')
 						url = url.replace('11','4')
 						place = "East Coast USA"
-					//	elem.className += " tate"
 					}
 					if(place.match(/Humboldt/i)){
 						place = "Arcata "
@@ -516,5 +519,4 @@ setTimeout(function(){
 	}
 }, 3000);
 */
-//document.getElementsByTagName("img")[4].onclick = function(){ }
 </script>
