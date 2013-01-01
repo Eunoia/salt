@@ -63,6 +63,19 @@
 			border-radius: 5px;
 			background-color:rgba(255,255,255,.8);
 		}
+		.post textarea, .post input, .post select{
+			display: block;
+			outline: none;
+			width: 50%;
+			margin: 0 auto;
+			float: left;
+			margin-right:3em;
+			border-radius: 5px;
+			margin-top: 10px;
+		}
+		.post textarea:focus{
+			background-color: rgb(255,255,172);
+		}
 		.post a:link {
 			color: #FFF;
 			float: right;
@@ -71,7 +84,7 @@
 			text-align: top;
 			border-radius: 3px;
 			text-overflow: ellipsis; }
-		.post a:link:last-child{
+		.post a:last-child{
 			margin-top:.4em;
 			background: rgba(0,0,0,.5);
 		}
@@ -90,13 +103,16 @@
 		.post a:visited{
 			color: rgba(255,255,255,.1); }
 		.content{
+			clear: both;
+			float: right;
+			color: #333;
+			padding: 1em; 
 			border:1px solid white;
 			display: none; }
 		.content_v{
 			clear: both;
 			float: right;
 			color: #333;
-			display: inline;
 			padding: 1em; }
 		/*div#footer{ display:none; }*/
 		#cont{
@@ -110,8 +126,18 @@
 		.post a img{
 			height: 1em;
 		}
+		.makeContact{
+			cursor: hand;
+			height: 1.5ex;
+		}
 		</style>
 		<div id="boxes">
+			<!-- <a href="/seattle">Seattle</a><br />
+			<a href="/pdx">Portland</a><br />
+			<a href="/sf">San Francisco</a><br />
+			<a href="/sb">Santa Barbara</a><br />
+			<a href="/la">Los Angeles</a><br />
+			 -->
 			<a href="/seattle">Seattle</a><br />
 			<a href="/pdx">PDX</a><br />
 			<a href="/sf">SF</a><br />
@@ -133,7 +159,7 @@
 			<span class="explanation"><span class="who" style="color: black; font-size:120%">megoszt</span> shows you all rides leaving today, without the tedium of sifting though inapplicable posts. To get started, select your city from the box on the right.</span>
 		<%
 		else
-			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i
+			today = (Time.parse(Time.new.strftime("%m/%d/%Y"))).to_i+(3600*24)
 			#today = (Time.parse(Time.new.strftime("11/25/%Y"))).to_i
 			results = Results.find(:all, :conditions => " leaving=#{today}")
 			posts = Posts.find(results.map{|r| r.cid })
@@ -154,8 +180,9 @@
 						href="<%=post.link %>">
 							<img src="/uprightarrow.svg">
 					</a>
-					<span class="inna"><%= post.title %></span>
-					<span name="content" class="content">
+					<img src="/emptyMail.svg" class="makeContact"/>
+					<span name="<%=post.cid %>" class="inna"><%= post.title %></span>
+					<span name="content" name="<%=post.cid %>" class="content">
 						<%= post.content %>
 						<a href="<%= post.link %>"><%= post.cid %></a>
 					</span>
@@ -165,16 +192,58 @@
 		</div>
 		<p style="height:100%"></p>
 		<script>
-			 innas = $("span.inna");
-			 for(i=0;i<innas.length;i++){
+			template = "Hi {Their Name},\n How are you?\nIm on a "
+			template += "mission.....\nIn addition, Im a reasonable person, who is cool"
+			template += "\nThink you can handle this burrito of awesome, contact me at:"
+			template += " {Your phone number}"
+         template += " \n\t\t\tYours in Faith,\n\t\t\t\t\t{Your name}"
+			//template += "\n###############################################\n"
+			innas = $("span.inna");
+			for(i=0;i<innas.length;i++){
 				innas[i].onclick  = function() {
-					this.parentElement.children[2].className = 'content_v';
-					console.log(this.parentElement.children[2])
-					//this.innerHTML = "(--)"
-					return false;
-			 	}
-			 }
+				$(this.parentNode).find(".content").slideDown('fast')
+				return false;
+				}
+			}
+			envelopes = document.getElementsByClassName("makeContact")
+			for(i=0;i<envelopes.length;i++){
+				envelopes[i].onclick = function(){
+					$(this).css("background", "rgb(200,200,200)");
+					var ta = document.createElement("textarea")
+					ta.className = "content"
+					ta.value = template;
+					ta.rows = ta.value.length/9
+					var input = document.createElement("input")
+					input.value = "In regards to: Ride to "
+					dest =  $(this.parentNode).find(".dest")[0].innerText.toLowerCase()
+					input.value += dest
+					select = document.createElement("select")
+					
+					TopOption = document.createElement("option")
+					TopOption.innerHTML = "Contact Method"
+					select.appendChild(TopOption)
+					
+					emailOption = document.createElement("option")
+					emailOption.innerHTML = "Email"
+					emailOption.setAttribute("id", "emailOption")
+					select.appendChild(emailOption)
+					//$("#emailOption")[0].onclick =function(){ console.log(this); }
+					
+					BottomOption = document.createElement("option")
+					BottomOption.innerHTML = "Cell Phone Text Message"
+					select.appendChild(BottomOption)
+					$(this.parentNode).find("span.content").addClass("panda").
+					removeClass("content").prepend(select).prepend(ta).prepend(input)
+					$(this.parentNode).find(".content").slideDown('fast')
+				}
+			}
 		</script>
+		<style>
+		.panda{
+			display: block;
+			padding: 2em;
+		}
+		</style>
 		<!-- script>
 		/*
 		function getDest(cid){
