@@ -93,23 +93,23 @@ get '/search/?:city?' do
     if(params[:city]=~/(pdx|portland)/i)
       @cl = "portland"
       @city = "Portland"
-      @banner = "PDX.png"
+      # @banner = "PDX.png"
     elsif params[:city]=~/l(os)?a(ngeles)?/i
       @city = "Los Angeles"
       @cl = "la"
-      @banner = "la.png"
+      # @banner = "la.png"
     elsif params[:city]=~/s(anta)?b(arbara)?/i
       @cl = "santabarbara"
       @city = "Santa Barbara"
-      @banner = "SB.png"
+      # @banner = "SB.png"
     elsif params[:city]=~/sea(ttle)?/i
       @cl = "seattle"
       @city = "Seattle"
-      @banner = "seattle.png"
+      # @banner = "seattle.png"
     else #if params[:city]=~/sf(bay)?/i
       @cl = "sfbay"
       @city = "The bay area"
-      @banner = "SF.png"
+      # @banner = "SF.png"
     end
   end
   haml :search, :format => :html5, :layout_engine => :erb
