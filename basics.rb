@@ -6,13 +6,15 @@ require 'active_record'
 db = (ENV['DATABASE_URL'] || "dev")
 if(db=="dev")
   ActiveRecord::Base.establish_connection(
-    :adapter  => 'postgresql',
-    :host     => '127.0.0.1',
-    :username => 'shawsome',
-    :password => '',
-    :database => "shawsome_test",
-    :client_min_messages => 0,
-    :encoding => 'utf8'
+    # :adapter  => 'postgresql',
+    # :host     => '127.0.0.1',
+    # :username => 'shawsome',
+    # :password => '',
+    # :database => "shawsome_test",
+    # :client_min_messages => 0,
+    # :encoding => 'utf8'
+    :adapter => "sqlite3",
+    :database  => "posts.sql"
   )
 else
   db = URI.parse(ENV['DATABASE_URL'])
@@ -151,6 +153,24 @@ get '/post/:cid' do
 end
 get '/about' do
 	erb :about
+end
+get '/api/latest/:city/:num' do
+  posts =  Posts.where("city = ?", params[:city]).last(params[:num].to_i||100)
+  combined = posts.map do |post|
+    result = Results.find(post.cid)
+    post_attr = %w{ posted city title content link cid }
+    result_attr = %w{ cid wo orig dest leaving fitness }
+    post_hash = post_attr.inject({}) do |mem, var|    
+      mem[var.to_sym] = post.send(var);
+      mem;
+    end
+    result_hash = result_attr.inject({}) do |mem, var|    
+      mem[var.to_sym] = result.send(var);
+      mem;
+    end
+    result_hash.merge(post_hash)
+  end
+  combined.to_json
 end
 not_found do
   @title = "Tyoko"
