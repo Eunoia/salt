@@ -112,7 +112,7 @@ get '/search/?:city?' do
       @banner = "SF.png"
     end
   end
-  erb :search
+  haml :search, :format => :html5, :layout_engine => :erb
 end
 get '/:city?' do
   @title = "Leaving Today |"

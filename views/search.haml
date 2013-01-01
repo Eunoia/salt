@@ -1,0 +1,62 @@
+%link{ :href=> "/css/search.css", :rel=>"stylesheet" }
+%blockquote{ :class => @cl}
+	%form#searchform{:action => "#", :method => "get", :onsubmit => "return false;"}
+		%fieldset#searchfieldset
+			%legend#searchlegend
+				%span
+					Rides from
+					%select
+						- %w[seattle  portland sfBay santaBarbara la].each do |c|
+							%option{ :name => "city", :selected => c.downcase==@cl ? "selected" : false} 
+								=c.gsub(/[A-Z]/, " \\0").upcase
+			%ul
+				%li
+					%label
+						%input{:checked => "checked", :name => "srchType", :type => "radio"}
+							Destination
+					%br
+						%label
+							%input{:disabled => "disabled", :name => "srchType", :type => "radio"}
+								Title Only
+						%br
+							%label
+								%input{:disabled => "disabled", :name => "srchType", :type => "radio"}
+									Entire Post
+							%br
+								%input#find{:type => "text", :placeholder => "Search...."}
+								%br
+				%li
+					Mode:
+					%br
+						%label
+							%input#wantedRadio{:name => "mode", :type => "radio", :value => "T"}
+								Wanted
+						%br
+							%label
+								%input#offeredRadio{:name => "mode", :type => "radio", :value => "A"}
+									Offered
+							%br
+								%label
+									%input#bothRadio{:checked => "checked", :name => "mode", :type => "radio"}
+										Both
+				%li
+					Leaving:
+					%br
+						%label
+							%input{:disabled => "disabled", :name => "chron", :type => "radio"}
+								Today
+						%br
+							%label
+								%input{:disabled => "disabled", :name => "chron", :type => "radio"}
+									Past
+							%br
+								%label
+									%input{:disabled => "disabled", :name => "chron", :type => "radio"}
+										In the future
+				%li
+					%input#resetForm{:disabled => "disabled", :type => "submit", :value => "Search"}
+			%span#nfoBar Info Bar
+%p#updates  
+%p#cont
+%script{ :src => "/jquery-ui-1.8.17.custom.min.js" }
+%script{ :src => "/js/search.js" }
