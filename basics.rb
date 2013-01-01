@@ -2,6 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'net/http'
 require 'active_record'
+require 'haml'
 
 db = (ENV['DATABASE_URL'] || "dev")
 if(db=="dev")
