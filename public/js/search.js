@@ -21,7 +21,7 @@
         }
       }).attr("disabled", false);
     };
-    $.getJSON('/api/latest/sfbay/20', function(rideSharePosts) {
+    $.getJSON('/api/latest/#{location.pathname.split("/").pop()}/200', function(rideSharePosts) {
       var $tmpl, img, place, places, post, url, _i, _len, _ref;
       places = [];
       for (_i = 0, _len = rideSharePosts.length; _i < _len; _i++) {
@@ -130,7 +130,7 @@
     return document.getElementsByTagName("select")[0].onchange = function() {
       var newCity, newURL;
       newURL = window.location.href.match(/^ht.+\//);
-      newCity = this.options[this.selectedIndex].innerText;
+      newCity = $(this).find(":selected").text();
       return window.location.href = newURL + newCity.replace(/\s+/g, "").toLowerCase();
     };
   });

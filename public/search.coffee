@@ -15,7 +15,7 @@ jQuery ->
 		}).attr("disabled",false);
 
 	$.getJSON(
-		'/api/latest/sfbay/20',
+		'/api/latest/#{location.pathname.split("/").pop()}/200',
 		(rideSharePosts) ->
 			places = []
 			for post in rideSharePosts
@@ -84,6 +84,7 @@ jQuery ->
 		$(".offered").fadeIn()
 
 	document.getElementsByTagName("select")[0].onchange = () -> 
-		newURL = window.location.href.match(/^ht.+\//)
-		newCity = this.options[this.selectedIndex].innerText;
+		newURL = window.location.href.match(/^ht.+\//);
+		newCity = $(this).find(":selected").text();
 		window.location.href = newURL+newCity.replace(/\s+/g, "").toLowerCase();
+

@@ -3,6 +3,11 @@
 			font-family: "Maagkramp";
 			src: url("/maagkramp_by_ficod.ttf") format("truetype");
 		}
+		@-moz-document url-prefix() {
+			#title {
+				background-color: transparent !important;
+			}
+		}
 		body{
 			margin:0;
 		<% if(@bgImg!=nil)%>
