@@ -155,10 +155,10 @@ end
 get '/about' do
 	erb :about
 end
-get '/api/latest/:city/?:num' do
+get '/api/latest/:city/?:num?' do
   valid_cities = %w{sfbay santabarbara portland seattle losangeles}
   return "not a city" unless valid_cities.include? params[:city]
-  posts =  Posts.limit(params[:num].to_i||100).find_all_by_city(params[:city])
+  posts =   Posts.find(:all, :conditions => [ "city= (?)", params[:city]], :limit => params[:num])
   combined = posts.map do |post|
     result = Results.find(post.cid)
     post_attr = %w{ posted city title content link cid }
