@@ -15,7 +15,7 @@ jQuery ->
 		}).attr("disabled",false);
 
 	$.getJSON(
-		'/api/latest/#{location.pathname.split("/").pop()}/200',
+		"/api/latest/#{location.pathname.split("/").pop()}/200",
 		(rideSharePosts) ->
 			places = []
 			for post in rideSharePosts
